@@ -32,7 +32,7 @@ public class FragmentHomepage extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recordlist_recyclerview);
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.homepage_recordlist_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);

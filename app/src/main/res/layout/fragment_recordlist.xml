@@ -23,7 +23,7 @@
         android:text="刷新本地数据" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recordlist_recyclerview"
+        android:id="@+id/homepage_recordlist_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity" />
