@@ -16,11 +16,12 @@ import java.util.List;
 import cn.edu.pku.gofish.Adapter.MessageAdapter;
 import cn.edu.pku.gofish.Model.Message1;
 
-/**
- * Created by leonardo on 16/5/7.
- */
-public class FragmentMessage extends Fragment {
 
+/**
+ * Created by Iris on 16/5/14.
+ */
+
+public class Fragment_message extends Fragment {
     private List<Message1> MessageList;
     private RecyclerView recyclerView;
     private MessageAdapter messageAdapter;
@@ -39,6 +40,7 @@ public class FragmentMessage extends Fragment {
         MessageList = new ArrayList<Message1>();
         initData();
         messageAdapter=new MessageAdapter(MessageList);
+
         recyclerView.setAdapter(messageAdapter);
     }
 

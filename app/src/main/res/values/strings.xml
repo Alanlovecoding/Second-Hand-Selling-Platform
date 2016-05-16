@@ -10,4 +10,6 @@
     <string name="meLike">我收藏的</string>
     <string name="meSetting">设置</string>
     <string name="meName">昵称</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

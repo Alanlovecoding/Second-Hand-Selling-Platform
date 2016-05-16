@@ -1,6 +1,5 @@
 package cn.edu.pku.gofish;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -172,9 +171,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         meFl.setSelected(false);
         meIv.setSelected(false);
-
-        Intent intent = new Intent(MainActivity.this,ActivityMessage.class);
-        startActivity(intent);
     }
 
     /**
