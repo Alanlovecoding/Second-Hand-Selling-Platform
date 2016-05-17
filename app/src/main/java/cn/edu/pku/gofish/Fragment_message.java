@@ -39,7 +39,7 @@ public class Fragment_message extends Fragment {
         recyclerView.setHasFixedSize(true);
         MessageList = new ArrayList<Message1>();
         initData();
-        messageAdapter=new MessageAdapter(MessageList);
+        messageAdapter=new MessageAdapter(MessageList,this.getContext());
 
         recyclerView.setAdapter(messageAdapter);
     }

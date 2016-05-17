@@ -14,7 +14,8 @@
         style="@style/CardView.Content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/cardview">
 
         <RelativeLayout
             android:layout_width="wrap_content"
