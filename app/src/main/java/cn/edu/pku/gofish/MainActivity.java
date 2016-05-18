@@ -1,5 +1,6 @@
 package cn.edu.pku.gofish;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.toggle_btn:
-               // clickToggleBtn();
+                clickToggleBtn();
                 break;
         }
     }
@@ -227,14 +228,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         meIv.setSelected(true);
     }
 
-    /*
-    private void clickToggleBtn() {
-        showPopupWindow(toggleImageView);
 
+    private void clickToggleBtn() {
+        //showPopupWindow(toggleImageView);
         plusImageView.setSelected(true);
+        Intent intent = new Intent(MainActivity.this,Activity_add.class);
+        startActivity(intent);
     }
 
-
+/*
     private void changeButtonImage() {
         plusImageView.setSelected(false);
     }
