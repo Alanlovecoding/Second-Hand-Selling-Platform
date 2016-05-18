@@ -37,7 +37,7 @@ public class FragmentFavorite extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecordList = new ArrayList<Record>();
         initData();
-        recordCardAdapter = new RecordCardAdapter(RecordList);
+        recordCardAdapter = new RecordCardAdapter(RecordList,getContext());
         recyclerView.setAdapter(recordCardAdapter);
     }
 
