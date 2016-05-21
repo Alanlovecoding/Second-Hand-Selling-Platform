@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/lightgray" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/layout_meTopInfo"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/grayboarder"
+                android:layout_marginTop="10dip">
+
+                <ImageView
+                    android:id="@+id/image_mePic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/grayboarder"
+                    android:src="@drawable/icon_me_pic" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/meName"
+                    android:layout_marginLeft="100dip"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_marginTop="10dip"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!-- Issue Information -->
+
+                <FrameLayout
+                    android:id="@+id/layout_meIssue"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/grayboarder">
+
+                    <ImageView
+                        android:id="@+id/image_meIssue"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dip"
+                        android:src="@drawable/icon_me_issue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/meIssue"
+                        android:layout_marginLeft="80dip"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+                </FrameLayout>
+
+                <!-- Rent Out Information -->
+
+                <FrameLayout
+                    android:id="@+id/layout_meRentOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/grayboarder">
+
+                    <ImageView
+                        android:id="@+id/image_meRentOut"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dip"
+                        android:src="@drawable/icon_me_rentout" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/meRentOut"
+                        android:layout_marginLeft="80dip"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+                </FrameLayout>
+
+                <!-- Rent In Information -->
+
+                <FrameLayout
+                    android:id="@+id/layout_meRentIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/grayboarder">
+
+                    <ImageView
+                        android:id="@+id/image_meRentIn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dip"
+                        android:src="@drawable/icon_me_rentin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/meRentIn"
+                        android:layout_marginLeft="80dip"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+                </FrameLayout>
+
+
+                <!-- Like Information -->
+
+                <FrameLayout
+                    android:id="@+id/layout_meLike"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/grayboarder">
+
+                    <ImageView
+                        android:id="@+id/image_meLike"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dip"
+                        android:src="@drawable/icon_favorite_select" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/meLike"
+                        android:layout_marginLeft="80dip"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/layout_meSetting"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/grayboarder"
+                android:layout_marginTop="10dip">
+
+                <ImageView
+                    android:id="@+id/image_meSetting"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dip"
+                    android:src="@drawable/icon_me_setting" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/meSetting"
+                    android:layout_marginLeft="80dip"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>
+
+
+
