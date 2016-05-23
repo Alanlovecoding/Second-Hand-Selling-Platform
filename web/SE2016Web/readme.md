@@ -9,7 +9,7 @@ Then cd to this folder, install all the packages needed:
 
 Then you should check your .env, make sure that all settings are corroct. If this file does not exist, you can copy .env.example to .env
 
-Next, type:
+Next, run:
 	php artisan key:generate
 This gonna generate a key for the application
 
