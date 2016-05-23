@@ -55,11 +55,20 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         public TextView information;
         public int position;
         public GridView gridView;
+        public ImageView imageView;
         public ViewHolder(View view)
         {
             super(view);
             information = (TextView) view.findViewById(R.id.textView);
             gridView=(GridView) view.findViewById(R.id.gridview);
+            imageView=(ImageView) view.findViewById(R.id.ivPerson);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+            });
         }
 
     }

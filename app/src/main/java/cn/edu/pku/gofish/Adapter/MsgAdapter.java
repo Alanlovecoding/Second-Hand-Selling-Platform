@@ -39,6 +39,7 @@ public class MsgAdapter extends ArrayAdapter<Message> {
             viewHolder.rightLayout = (LinearLayout) view.findViewById(R.id.right_layout);
             viewHolder.leftMsg = (TextView) view.findViewById(R.id.left_msg);
             viewHolder.rightMsg = (TextView) view.findViewById(R.id.right_msg);
+
             view.setTag(viewHolder);
         }
         else
