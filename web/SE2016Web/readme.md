@@ -14,3 +14,5 @@ Then you should check your .env, make sure that all settings are corroct. If thi
 Next, type:	
 	php artisan key:generate
 This gonna generate a key for the application
+
+Finally, you need to change the root dir of your server to the folder public
