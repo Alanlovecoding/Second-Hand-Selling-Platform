@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Favorite;
+use App\Item;
+use App\TradeRequest;
 class UsersController extends Controller
 {
     /**

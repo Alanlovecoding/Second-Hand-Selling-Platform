@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Request;
+use App\TradeRequest;
 class RequestsController extends Controller
 {
     /**
@@ -16,7 +16,7 @@ class RequestsController extends Controller
      */
     public function index()
     {
-        //
+        return Request::all();
     }
 
     /**
