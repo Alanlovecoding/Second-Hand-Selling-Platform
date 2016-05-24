@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Favorite;
 class FavoritesController extends Controller
 {
     /**
@@ -17,7 +16,8 @@ class FavoritesController extends Controller
      */
     public function index($user_id)
     {
-        //
+        $user = User::find($user_id);
+        return $user->favorites;
     }
 
     /**
@@ -28,20 +28,10 @@ class FavoritesController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        //
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $user_id, $id)
-    {
-        //
+        $user = User::find($user_id);
+        $item_id = Input::get('item_id');
+        $user->favorites()->attach($item_id);
+        return True;
     }
 
     /**
@@ -50,8 +40,10 @@ class FavoritesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($user_id, $id)
+    public function destroy($user_id, $item_id)
     {
-        //
+        $user = User::find($user_id);
+        $user->favorites()->detach($item_id);
+        return True;
     }
 }

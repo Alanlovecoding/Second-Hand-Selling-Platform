@@ -15,4 +15,9 @@ class Item extends Model
     {
         return $this->hasMany('App\TradeRequest');
     }
+
+    public function favoriting_user()
+    {
+        return $this->belongsToMany('App\User', 'favorites');
+    }
 }
