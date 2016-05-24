@@ -14,6 +14,9 @@ Next, run:
 This gonna generate a key for the application
 
 Finally, you need to change the root dir of your server to the folder public.
+Be aware: the rewrite module of apache must be enabled!
+	sudo ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
+And in apache2.conf or httpd.conf, the AllowOverride config of your directory should be: AllowOverride All
 
 Directories within the storage and the bootstrap/cache directories should be writable by your web server or Laravel will not run.
 

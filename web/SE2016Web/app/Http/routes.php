@@ -12,3 +12,19 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
+
+Route::group(['prefix' => 'api'], function () {
+	Route::resource('users', 'Api\UsersController', ['except' => ['create', 'store', 'edit']]);
+	Route::resource('items', 'Api\ItemsController', ['except' => ['create', 'edit']]);
+	Route::resource('requests', 'Api\RequestsController', ['except' => ['create', 'edit']]);
+
+	Route::group(['prefix' => 'users/{user_id}'], function()
+	{
+		Route::resource('favorites', 'Api\FavoritesController', ['except' => ['create', 'edit', 'show']]);
+	});
+});
