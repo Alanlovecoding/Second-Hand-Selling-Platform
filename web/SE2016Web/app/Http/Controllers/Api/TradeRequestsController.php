@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Item;
 use App\TradeRequest;
-class ItemsController extends Controller
+class TradeRequestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return Item::all();
+        return Request::all();
     }
 
     /**
@@ -28,22 +27,7 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'number' => 'required',
-            'body' => 'required',
-        ]);
-
-        $article = new Item;
-        $article->classname = Input::get('classname');
-        $article->title = Input::get('title');
-        $article->body = Input::get('body');
-        $article->user_id = 1;//Auth::user()->id;
-
-        if ($article->save()) {
-            return Redirect::to('admin');
-        } else {
-            return Redirect::back()->withInput()->withErrors('保存失败！');
-        }
+        //
     }
 
     /**

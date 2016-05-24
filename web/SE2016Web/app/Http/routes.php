@@ -21,10 +21,13 @@ Route::controllers([
 Route::group(['prefix' => 'api'], function () {
 	Route::resource('users', 'Api\UsersController', ['except' => ['create', 'store', 'edit']]);
 	Route::resource('items', 'Api\ItemsController', ['except' => ['create', 'edit']]);
-	Route::resource('requests', 'Api\RequestsController', ['except' => ['create', 'edit']]);
+	Route::resource('trade_requests', 'Api\TradeRequestsController', ['except' => ['create', 'edit']]);
 
 	Route::group(['prefix' => 'users/{user_id}'], function()
 	{
 		Route::resource('favorites', 'Api\FavoritesController', ['except' => ['create', 'edit', 'show']]);
+		Route::get('items', 'Api\UsersController@getItems');
+		Route::get('trade_requests/sent', 'Api\UsersController@getSentRequests');
+		Route::get('trade_requests/received', 'Api\UsersController@getReceivedRequests');
 	});
 });

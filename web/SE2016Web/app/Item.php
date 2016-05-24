@@ -11,8 +11,8 @@ class Item extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function requests()
+    public function trade_requests()
     {
-        return $this->hasMany('App\Request');
+        return $this->hasMany('App\TradeRequest');
     }
 }

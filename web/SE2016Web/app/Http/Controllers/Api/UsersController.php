@@ -67,4 +67,22 @@ class UsersController extends Controller
         $user->delete();
         return True;
     }
+
+    public function getItems($id)
+    {
+        $user = User::find($id);
+        return $user->items;
+    }
+
+    public function getSentRequests($id)
+    {
+        $user = User::find($id);
+        return $user->sent_trade_requests;
+    }
+
+    public function getReceivedRequests($id)
+    {
+        $user = User::find($id);
+        return $user->received_trade_requests;
+    }
 }

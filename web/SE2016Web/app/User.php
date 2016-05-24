@@ -29,13 +29,18 @@ class User extends Authenticatable
         return $this->hasMany('App\Item');
     }
 
-    public function requests()
+    public function sent_trade_requests()
     {
-        return $this->hasMany('App\Request');
+        return $this->hasMany('App\TradeRequest');
     }
 
     public function favorites()
     {
         return $this->hasMany('App\Favorite');
+    }
+
+    public function received_trade_requests()
+    {
+        return $this->hasManyThrough('App\TradeRequest', 'App\Item');
     }
 }
