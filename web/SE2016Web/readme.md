@@ -20,3 +20,5 @@ Directories within the storage and the bootstrap/cache directories should be wri
 Once you have configured your database settings in .env, you can run:
 	php artisan migrate:refresh --seed
 to create all the tables and the initial data.
+
+Here is a tutorial for laravel: https://lvwenhan.com/sort/laravel
