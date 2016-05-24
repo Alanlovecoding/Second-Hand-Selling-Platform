@@ -30,19 +30,23 @@ class ItemsController extends Controller
     {
         $this->validate($request, [
             'number' => 'required',
-            'body' => 'required',
+            'user_id' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'status' => 'required'
         ]);
 
-        $article = new Item;
-        $article->classname = Input::get('classname');
-        $article->title = Input::get('title');
-        $article->body = Input::get('body');
-        $article->user_id = 1;//Auth::user()->id;
+        $item = new Item;
+        $item->number = Input::get('number');
+        $item->user_id = Input::get('user_id');
+        $item->price = Input::get('price');
+        $item->description = Input::get('description');
+        $item->status = Input::get('status');
 
-        if ($article->save()) {
-            return Redirect::to('admin');
+        if ($item->save()) {
+            return True;
         } else {
-            return Redirect::back()->withInput()->withErrors('保存失败！');
+            return False;
         }
     }
 
@@ -54,7 +58,7 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Item::find($id);
     }
 
     /**
@@ -66,7 +70,26 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'number' => 'required',
+            'user_id' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+
+        $item = Item::find($id);
+        $item->number = Input::get('number');
+        $item->user_id = Input::get('user_id');
+        $item->price = Input::get('price');
+        $item->description = Input::get('description');
+        $item->status = Input::get('status');
+
+        if ($item->save()) {
+            return True;
+        } else {
+            return False;
+        }
     }
 
     /**
@@ -77,6 +100,8 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Item::find($id);
+        $item->delete();
+        return True;
     }
 }

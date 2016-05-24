@@ -43,7 +43,7 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:users|max:255',
-            'email' => 'required',
+            'email' => 'required'
         ]);
         $user = User::find($id);
         $user->name = Input::get('name');
