@@ -27,7 +27,23 @@ class TradeRequestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'user_id' => 'required',
+            'item_id' => 'required',
+            'number' => 'required',
+            'status' => 'required'
+        ]);
+        $trade_request = new TradeRequest;
+        $trade_request->user_id = Input::get('user_id');
+        $trade_request->item_id = Input::get('item_id');
+        $trade_request->number = Input::get('number');
+        $trade_request->status = Input::get('status');
+
+        if ($trade_request->save()) {
+            return True;
+        } else {
+            return False;
+        }
     }
 
     /**
@@ -38,7 +54,7 @@ class TradeRequestsController extends Controller
      */
     public function show($id)
     {
-        //
+        return TradeRequest::find($id);
     }
 
     /**
@@ -50,7 +66,23 @@ class TradeRequestsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'user_id' => 'required',
+            'item_id' => 'required',
+            'number' => 'required',
+            'status' => 'required'
+        ]);
+        $trade_request = TradeRequest::find($id);
+        $trade_request->user_id = Input::get('user_id');
+        $trade_request->item_id = Input::get('item_id');
+        $trade_request->number = Input::get('number');
+        $trade_request->status = Input::get('status');
+
+        if ($trade_request->save()) {
+            return True;
+        } else {
+            return False;
+        }
     }
 
     /**
@@ -61,6 +93,8 @@ class TradeRequestsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trade_request = TradeRequest::find($id);
+        $trade_request->delete();
+        return True;
     }
 }
