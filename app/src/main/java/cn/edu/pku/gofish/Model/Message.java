@@ -9,7 +9,7 @@ public class Message {
 
     private String content;
     private int type;
-
+    private String time;
     public Message(String content, int type)
     {
         this.content=content;
