@@ -92,6 +92,7 @@ public class Activity_add extends AppCompatActivity {
                     ArrayList<String> list = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
                     Log.d(TAG, "list: " + "list = [" + list.size());
                     loadAdpater(list);
+
                     break;
                 // 预览
                 case REQUEST_PREVIEW_CODE:
