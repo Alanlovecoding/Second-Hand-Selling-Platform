@@ -16,8 +16,8 @@ class CreateTradeRequestsTable extends Migration
           $table->increments('id');
           $table->integer('user_id');
           $table->integer('item_id');
-          $table->integer('number');
-          $table->enum('status', ['unreviewed', 'reviewed', 'rejected']);
+          $table->string('message');
+          $table->enum('status', ['read', 'unread']);
 
           $table->timestamps();
       });
@@ -31,6 +31,6 @@ class CreateTradeRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('requests');
+        Schema::drop('trade_requests');
     }
 }
