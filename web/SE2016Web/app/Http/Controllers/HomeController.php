@@ -10,8 +10,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('Home')->withItems(Item::all()->sortByDesc(function($item){
-    		return $item->created_at;
-		}));
+        return view('Home');
     }
 }
