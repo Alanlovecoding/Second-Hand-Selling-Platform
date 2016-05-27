@@ -12,4 +12,9 @@ class HomeController extends Controller
     {
         return view('Home');
     }
+
+    public function haha()
+    {
+        return view('wangyaoxieqianduan');
+    }
 }

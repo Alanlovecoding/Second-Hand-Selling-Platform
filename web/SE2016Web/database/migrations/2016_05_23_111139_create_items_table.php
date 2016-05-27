@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
           $table->integer('user_id');
           $table->float('price');
           $table->text('description');
+          $table->string('image_file');
           $table->enum('status', ['unreviewed', 'reviewed', 'rejected']);
 
           $table->timestamps();
