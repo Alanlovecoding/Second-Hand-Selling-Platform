@@ -26,6 +26,12 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         this.context = context;
     }
 
+    public void refresh(List<Record> _RecordList)
+    {
+        RecordList = _RecordList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("ViewHolder", "onCreateViewHolder, i: " + i);

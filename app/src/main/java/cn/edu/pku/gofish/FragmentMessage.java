@@ -10,11 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.pku.gofish.Adapter.MessageAdapter;
 import cn.edu.pku.gofish.Model.Message1;
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by leonardo on 16/5/7.
@@ -24,6 +32,10 @@ public class FragmentMessage extends Fragment {
     private List<Message1> MessageList;
     private RecyclerView recyclerView;
     private MessageAdapter messageAdapter;
+    private List<Integer> idList;
+    private String url = "/api/items/index";
+    AsyncHttpClient client = new AsyncHttpClient();
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, null);
         return view;
@@ -44,11 +56,45 @@ public class FragmentMessage extends Fragment {
 
     public void initData()
     {
-        MessageList.add(new Message1("01:00","wmc","hello!"));
-        MessageList.add(new Message1("02:00","wxp","hello!"));
-        MessageList.add(new Message1("03:00","wcs","hello!"));
-        MessageList.add(new Message1("04:00","wy","hello!"));
-        MessageList.add(new Message1("10:00","xyj","hello!"));
-        MessageList.add(new Message1("11:00","dh","hello!"));
+        for(int i=0;i<idList.size();i++)
+        {
+            int id = idList.get(i);
+            Message1 tmp = new Message1(id);
+            tmp.downloadFile();
+            MessageList.add(tmp);
+        }
+    }
+
+    public void refresh()
+    {
+        initData();
+        messageAdapter.refresh(MessageList);
+    }
+
+    public void downloadList(String url)
+    {
+        client.get(url, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONArray list;
+                    if(response.has("list"))
+                    {
+                        list = response.getJSONArray("list");
+                        for (int i = 0; i < list.length() ; i++){
+                            idList.add(list.getInt(i));
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
     }
 }

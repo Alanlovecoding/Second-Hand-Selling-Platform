@@ -30,6 +30,10 @@ public class Record {
     AsyncHttpClient client = new AsyncHttpClient();
 
     private String url = "/api/items";
+    public Record(int id)
+    {
+        ID = id;
+    }
     public Record(String _usrname, String _title, String _describetext, float _pricetext, int _number,ArrayList<String> _imagePaths) {
         title = _title;
         describetext = _describetext;
@@ -72,9 +76,9 @@ public class Record {
         });
     }
 
-    public void downloadFile(String url)
+    public void downloadFile()
     {
-        client.get(url + user_id, null, new JsonHttpResponseHandler() {
+        client.get(url + "/"+ID, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {

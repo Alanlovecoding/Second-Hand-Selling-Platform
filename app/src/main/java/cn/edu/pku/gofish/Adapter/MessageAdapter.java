@@ -1,18 +1,17 @@
 package cn.edu.pku.gofish.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-import cn.edu.pku.gofish.ActivityMessage;
 import cn.edu.pku.gofish.Model.Message1;
 import cn.edu.pku.gofish.R;
 
@@ -31,6 +30,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
     }
 
+    public void refresh(List<Message1> _RecordList)
+    {
+        MessageList = _RecordList;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -47,6 +52,19 @@ public class MessageAdapter extends RecyclerView.Adapter {
         holder.time.setText(message.TimeLine());
         holder.usrname.setText(message.UsrnameLine());
         holder.briefmessage.setText(message.BriefMessageLine());
+        holder.correct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -63,6 +81,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public int position;
         public LinearLayout cardview;
         private Context context;
+        public Button correct,cancel;
         public ViewHolder(View view,Context _context)
         {
             super(view);
@@ -71,14 +90,16 @@ public class MessageAdapter extends RecyclerView.Adapter {
             usrname = (TextView) view.findViewById(R.id.mvusrname);
             briefmessage = (TextView) view.findViewById(R.id.mvbriefmessage);
             cardview = (LinearLayout) view.findViewById(R.id.cardview);
-            cardview.setOnClickListener(new View.OnClickListener() {
+            correct = (Button) view.findViewById(R.id.correct);
+            cancel = (Button) view.findViewById(R.id.cancel);
+            /*cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ActivityMessage.class);
                     context.startActivity(intent);
 
                 }
-            });
+            });*/
            // usrpic = (ImageView) view.findViewById(R.id.mvPerson);
 
         }
