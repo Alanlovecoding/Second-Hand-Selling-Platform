@@ -1,6 +1,8 @@
 package cn.edu.pku.gofish.Model;
 
-<<<<<<< HEAD
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
@@ -12,7 +14,7 @@ import java.io.File;
 import java.io.*;
 import java.util.ArrayList;
 
-=======
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -26,73 +28,22 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
->>>>>>> 102f61fafd3d1fff7b5ace64eff90aa8933e9075
+
 /**
  * Created by leonardo on 16/5/11.
  */
 public class Record {
-<<<<<<< HEAD
-    private String title;
-    private String describetext;
-    private String price;
-    private String type;
-=======
+
     private int ID;
     private int user_id;
     int number;
     private String title;
     private String describetext;
     private float price;
->>>>>>> 102f61fafd3d1fff7b5ace64eff90aa8933e9075
     private ArrayList<String> imagePaths;
     private int imgcnt;
     private String usrname;
-    private File[] file;
-<<<<<<< HEAD
-    AsyncHttpClient client=new AsyncHttpClient();
-
-    public Record(String _usrname,String _title,String _describetext,String _pricetext,String _type,ArrayList<String> _imagePaths)
-    {
-        title=_title;
-        describetext=_describetext;
-        price=_pricetext;
-        type=_type;
-        imagePaths=_imagePaths;
-        usrname=_usrname;
-        //file=new File[9];
-        imgcnt=imagePaths.size();
-    }
-
-    public void uploadFile(String url) throws Exception {
-        int count =0;
-        RequestParams params = new RequestParams();
-        for(String tmp:imagePaths) {
-            file[count] = new File(tmp);
-            if (file[count].exists() && file[count].length() > 0) {
-                count++;
-            } else {
-                throw new Exception("FileNotFoundException");
-            }
-        }
-        params.put("uploadfiles",file);
-        params.put("price",price);
-        params.put("title",title);
-        params.put("type",type);
-        params.put("usrname",usrname);
-        params.put("describetext",describetext);
-        client.post(url, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int i, PreferenceActivity.Header[] headers, byte[] bytes) {
-
-            }
-
-            @Override
-            public void onFailure(int i, PreferenceActivity.Header[] headers, byte[] bytes, Throwable throwable) throws Exception{
-                throw new Exception("UploadFailException");
-            }
-            });
-    }
-=======
+    private Bitmap[] file;
     AsyncHttpClient client = new AsyncHttpClient();
 
     private String url = "/api/items";
@@ -113,10 +64,17 @@ public class Record {
 
     public void uploadFile(String url) throws Exception {
         int count = 0;
+        FileInputStream fis=null;
         RequestParams params = new RequestParams();
         for (String tmp : imagePaths) {
-            file[count] = new File(tmp);
-            if (file[count].exists() && file[count].length() > 0) {
+            try {
+                fis=new FileInputStream(tmp);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            file[count] = bitmap;
+            if (file[count]!=null) {
                 count++;
             } else {
                 throw new Exception("FileNotFoundException");
@@ -168,5 +126,9 @@ public class Record {
     {
         return usrname;
     }
+    public int getID(){return ID;}
+    public String getTitle(){return title;}
+    public String getDescribetext(){return describetext;}
+    public Bitmap[] getFile(){return file;}
+    public int getImgcnt(){return imgcnt;}
 }
->>>>>>> 102f61fafd3d1fff7b5ace64eff90aa8933e9075
