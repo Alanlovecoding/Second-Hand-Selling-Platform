@@ -17,7 +17,7 @@ class FavoritesController extends Controller
     public function index($user_id)
     {
         $user = User::find($user_id);
-        return $user->favorites;
+        return $user->favorites()->orderBy('updated_at', 'desc')->get()->pluck('id');
     }
 
     /**

@@ -36,7 +36,7 @@ class User extends Authenticatable
 
     public function received_trade_requests()
     {
-        return $this->hasMany('App\TradeRequest', 'target_id');
+        return $this->hasManyThrough('App\TradeRequest', 'App\Item');
     }
 
     public function favorites()

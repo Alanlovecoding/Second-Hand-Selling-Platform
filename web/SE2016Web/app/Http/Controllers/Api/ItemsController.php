@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Item;
 use App\TradeRequest;
 class ItemsController extends Controller
@@ -17,7 +19,8 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return Item::all()->value('id');;
+        //return DB::table('items')->orderBy('updated_at', 'desc')->get();
+        return Item::orderBy('updated_at', 'desc')->get()->pluck('id');
     }
 
     /**
@@ -29,6 +32,7 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'title' => 'required',
             'number' => 'required',
             'user_id' => 'required',
             'price' => 'required',
@@ -37,6 +41,7 @@ class ItemsController extends Controller
         ]);
 
         $item = new Item;
+        $item->title = Input::get('title');
         $item->number = Input::get('number');
         $item->user_id = Input::get('user_id');
         $item->price = Input::get('price');
@@ -71,6 +76,7 @@ class ItemsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
+            'title' => 'required',
             'number' => 'required',
             'user_id' => 'required',
             'price' => 'required',
@@ -79,6 +85,7 @@ class ItemsController extends Controller
         ]);
 
         $item = Item::find($id);
+        $item->title = Input::get('title');
         $item->number = Input::get('number');
         $item->user_id = Input::get('user_id');
         $item->price = Input::get('price');
