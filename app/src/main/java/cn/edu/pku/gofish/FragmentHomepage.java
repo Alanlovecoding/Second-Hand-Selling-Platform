@@ -91,9 +91,9 @@ public class FragmentHomepage extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONArray list;
-                    if(response.has("list"))
+                    if(response.has(""))
                     {
-                        list = response.getJSONArray("list");
+                        list = response.getJSONArray("");
                         for (int i = 0; i < list.length() ; i++){
                             idList.add(list.getInt(i));
                         }
