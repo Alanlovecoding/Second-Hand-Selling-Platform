@@ -71,18 +71,18 @@ class UsersController extends Controller
     public function getItems($id)
     {
         $user = User::find($id);
-        return $user->items;
+        return $user->items()->orderBy('updated_at', 'desc')->get();
     }
 
     public function getSentRequests($id)
     {
         $user = User::find($id);
-        return $user->sent_trade_requests;
+        return $user->sent_trade_requests()->orderBy('updated_at', 'desc')->get();
     }
 
     public function getReceivedRequests($id)
     {
         $user = User::find($id);
-        return $user->received_trade_requests;
+        return $user->received_trade_requests()->orderBy('updated_at', 'desc')->get();
     }
 }

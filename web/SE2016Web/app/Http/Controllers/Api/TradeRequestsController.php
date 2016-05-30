@@ -16,7 +16,7 @@ class TradeRequestsController extends Controller
      */
     public function index()
     {
-        return Request::all();
+        return TradeRequest::all();
     }
 
     /**
@@ -37,6 +37,7 @@ class TradeRequestsController extends Controller
         $trade_request->user_id = Input::get('user_id');
         $trade_request->item_id = Input::get('item_id');
         $trade_request->number = Input::get('number');
+        $trade_request->message = Input::get('message');
         $trade_request->status = Input::get('status');
 
         if ($trade_request->save()) {
@@ -76,6 +77,7 @@ class TradeRequestsController extends Controller
         $trade_request->user_id = Input::get('user_id');
         $trade_request->item_id = Input::get('item_id');
         $trade_request->number = Input::get('number');
+        $trade_request->message = Input::get('message');
         $trade_request->status = Input::get('status');
 
         if ($trade_request->save()) {
