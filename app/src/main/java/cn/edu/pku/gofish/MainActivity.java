@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 /**
  * Created by leonardo on 16/5/7.
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private ImageView homepageIv, messageIv, favoriteIv, meIv;
-
+    private TextView homepageTv,messageTv,favoriteTv,meTv;
 
     private ImageView toggleImageView, plusImageView;
 
@@ -65,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         favoriteIv = (ImageView) findViewById(R.id.image_favorite);
         meIv = (ImageView) findViewById(R.id.image_me);
 
+        homepageTv = (TextView) findViewById(R.id.text_homepage);
+        messageTv = (TextView) findViewById(R.id.text_message);
+        favoriteTv = (TextView) findViewById(R.id.text_favorite);
+        meTv = (TextView) findViewById(R.id.text_me);
 
         toggleImageView = (ImageView) findViewById(R.id.toggle_btn);
         plusImageView = (ImageView) findViewById(R.id.plus_btn);
@@ -136,15 +141,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         homepageFl.setSelected(true);
         homepageIv.setSelected(true);
+        homepageTv.setSelected(true);
 
         messageFl.setSelected(false);
         messageIv.setSelected(false);
+        messageTv.setSelected(false);
 
         favoriteFl.setSelected(false);
         favoriteIv.setSelected(false);
+        favoriteTv.setSelected(false);
 
         meFl.setSelected(false);
         meIv.setSelected(false);
+        meTv.setSelected(false);
     }
 
     /**
@@ -163,15 +172,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         homepageFl.setSelected(false);
         homepageIv.setSelected(false);
+        homepageTv.setSelected(false);
 
         messageFl.setSelected(true);
         messageIv.setSelected(true);
+        messageTv.setSelected(true);
 
         favoriteFl.setSelected(false);
         favoriteIv.setSelected(false);
+        favoriteTv.setSelected(false);
 
         meFl.setSelected(false);
         meIv.setSelected(false);
+        meTv.setSelected(false);
     }
 
     /**
@@ -190,15 +203,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         homepageFl.setSelected(false);
         homepageIv.setSelected(false);
+        homepageTv.setSelected(false);
 
         messageFl.setSelected(false);
         messageIv.setSelected(false);
+        messageTv.setSelected(false);
 
         favoriteFl.setSelected(true);
         favoriteIv.setSelected(true);
+        favoriteTv.setSelected(true);
 
         meFl.setSelected(false);
         meIv.setSelected(false);
+        meTv.setSelected(false);
     }
 
     /**
@@ -217,15 +234,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         homepageFl.setSelected(false);
         homepageIv.setSelected(false);
+        homepageTv.setSelected(false);
 
         messageFl.setSelected(false);
         messageIv.setSelected(false);
+        messageTv.setSelected(false);
 
         favoriteFl.setSelected(false);
         favoriteIv.setSelected(false);
+        favoriteTv.setSelected(false);
 
         meFl.setSelected(true);
         meIv.setSelected(true);
+        meTv.setSelected(true);
     }
 
 

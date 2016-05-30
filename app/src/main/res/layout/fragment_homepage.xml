@@ -22,22 +22,22 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:drawableLeft="@drawable/icon_search_small"
+
                 android:background="@drawable/search_edittext_shape"
                 android:paddingLeft="12dp"
-                android:textSize="12sp"
+                android:textSize="24sp"
                 android:hint="请输入文字..."
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp" />
 
-            <ImageView android:id="@+id/ivDeleteText"
+            <ImageView android:id="@+id/ivSearchText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/icon_search_small"
                 android:layout_centerInParent="true"
                 android:paddingRight="20dp"
-                android:visibility="gone"/>
+                />
 
         </RelativeLayout>
 

@@ -37,18 +37,18 @@ public class FragmentFavorite extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecordList = new ArrayList<Record>();
         initData();
-        recordCardAdapter = new RecordCardAdapter(RecordList);
+        recordCardAdapter = new RecordCardAdapter(RecordList,getContext());
         recyclerView.setAdapter(recordCardAdapter);
     }
 
     public void initData()
     {
-        RecordList.add(new Record("$1"));
-        RecordList.add(new Record("$2"));
-        RecordList.add(new Record("$3"));
-        RecordList.add(new Record("$4"));
-        RecordList.add(new Record("$2"));
-        RecordList.add(new Record("$3"));
-        RecordList.add(new Record("$4"));
+        RecordList.add(new Record("$1",null,null,null,null,null));
+        RecordList.add(new Record("$2",null,null,null,null,null));
+        RecordList.add(new Record("$3",null,null,null,null,null));
+        RecordList.add(new Record("$4",null,null,null,null,null));
+        RecordList.add(new Record("$2",null,null,null,null,null));
+        RecordList.add(new Record("$3",null,null,null,null,null));
+        RecordList.add(new Record("$4",null,null,null,null,null));
     }
 }

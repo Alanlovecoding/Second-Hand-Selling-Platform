@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,10 +24,16 @@ import cn.edu.pku.gofish.R;
 public class MessageAdapter extends RecyclerView.Adapter {
     private List<Message1> MessageList;
     private Context context;
-    public MessageAdapter(List<Message1> _MessageList) {
+    public MessageAdapter(List<Message1> _MessageList,Context context) {
         MessageList = _MessageList;
-        //this.context = context;
+        this.context = context;
 
+    }
+
+    public void refresh(List<Message1> _RecordList)
+    {
+        MessageList = _RecordList;
+        notifyDataSetChanged();
     }
 
 
@@ -33,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("ViewHolder", "onCreateViewHolder, i: " + i);
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_message, viewGroup, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v,context);
     }
 
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
@@ -44,6 +52,19 @@ public class MessageAdapter extends RecyclerView.Adapter {
         holder.time.setText(message.TimeLine());
         holder.usrname.setText(message.UsrnameLine());
         holder.briefmessage.setText(message.BriefMessageLine());
+        holder.correct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+        holder.cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -58,15 +79,27 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public TextView briefmessage;
         //public ImageView usrpic;
         public int position;
-        public android.support.v7.widget.CardView cardview;
-        public ViewHolder(View view)
+        public LinearLayout cardview;
+        private Context context;
+        public Button correct,cancel;
+        public ViewHolder(View view,Context _context)
         {
             super(view);
-
+            this.context = _context;
             time = (TextView) view.findViewById(R.id.mvTime);
             usrname = (TextView) view.findViewById(R.id.mvusrname);
             briefmessage = (TextView) view.findViewById(R.id.mvbriefmessage);
-            cardview = (android.support.v7.widget.CardView) view.findViewById(R.id.cardview);
+            cardview = (LinearLayout) view.findViewById(R.id.cardview);
+            correct = (Button) view.findViewById(R.id.correct);
+            cancel = (Button) view.findViewById(R.id.cancel);
+            /*cardview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ActivityMessage.class);
+                    context.startActivity(intent);
+
+                }
+            });*/
            // usrpic = (ImageView) view.findViewById(R.id.mvPerson);
 
         }
