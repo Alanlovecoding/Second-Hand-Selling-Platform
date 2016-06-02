@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class FragmentHomepage extends Fragment {
     private RecordCardAdapter recordCardAdapter;
     private List<Record> RecordList;
     private List<Integer> idList;
-    private String url = "/api/items/index";
+    private String url = "http://gofish.hackpku.com:8003/api/items";
     private ImageView search;
     private EditText searchText;
     AsyncHttpClient client = new AsyncHttpClient();
@@ -56,6 +56,7 @@ public class FragmentHomepage extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecordList = new ArrayList<Record>();
         idList = new ArrayList<Integer>();
+        downloadList();
         initData();
         recordCardAdapter = new RecordCardAdapter(RecordList,getContext());
         recyclerView.setAdapter(recordCardAdapter);
@@ -72,8 +73,10 @@ public class FragmentHomepage extends Fragment {
         for(int i=0;i<idList.size();i++)
         {
             int id = idList.get(i);
+            String I = ""+id;
+            Log.d("NET","Homepage"+I);
             Record tmp = new Record(id);
-            tmp.downloadFile();
+            //tmp.downloadFile();
             RecordList.add(tmp);
         }
     }
@@ -84,19 +87,18 @@ public class FragmentHomepage extends Fragment {
         recordCardAdapter.refresh(RecordList);
     }
 
-    public void downloadList(String url)
+    public void downloadList()
     {
+        Log.d("NET","HomePage");
         client.get(url, null, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("NET","HomePage get success");
                 try {
-                    JSONArray list;
-                    if(response.has(""))
-                    {
-                        list = response.getJSONArray("");
-                        for (int i = 0; i < list.length() ; i++){
-                            idList.add(list.getInt(i));
-                        }
+                    JSONArray list = response;
+
+                    for (int i = 0; i < list.length() ; i++){
+                        idList.add(list.getInt(i));
                     }
 
                 } catch (JSONException e) {

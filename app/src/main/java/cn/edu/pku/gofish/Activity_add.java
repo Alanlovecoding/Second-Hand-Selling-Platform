@@ -1,8 +1,8 @@
 package cn.edu.pku.gofish;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.ImageCaptureManager;
@@ -23,8 +24,9 @@ import com.foamtrace.photopicker.intent.PhotoPreviewIntent;
 
 import org.json.JSONArray;
 
-import java.io.File;
 import java.util.ArrayList;
+
+import cn.edu.pku.gofish.Model.Record;
 
 public class Activity_add extends AppCompatActivity {
     private static final int REQUEST_CAMERA_CODE = 10;
@@ -37,6 +39,7 @@ public class Activity_add extends AppCompatActivity {
     private EditText title;
     private EditText describetext;
     private EditText pricetext;
+    private TextView issueConfirm;
     private String TAG =Activity_add.class.getSimpleName();
 
     @Override
@@ -48,6 +51,7 @@ public class Activity_add extends AppCompatActivity {
         title = (EditText) findViewById(R.id.addTitle);
         describetext = (EditText) findViewById(R.id.editText1);
         pricetext = (EditText) findViewById(R.id.addPrice);
+        issueConfirm = (TextView) findViewById(R.id.IssueConfirm);
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 3 ? 3 : cols;
         gridView.setNumColumns(cols);
@@ -56,15 +60,14 @@ public class Activity_add extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String imgs = (String) parent.getItemAtPosition(position);
-                if ("000000".equals(imgs) ){
+                if ("000000".equals(imgs)) {
                     PhotoPickerIntent intent = new PhotoPickerIntent(Activity_add.this);
                     intent.setSelectModel(SelectModel.MULTI);
                     intent.setShowCarema(true); // 是否显示拍照
                     intent.setMaxTotal(9); // 最多选择照片数量，默认为9
                     intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
                     startActivityForResult(intent, REQUEST_CAMERA_CODE);
-                }
-                else{
+                } else {
                     PhotoPreviewIntent intent = new PhotoPreviewIntent(Activity_add.this);
                     intent.setCurrentItem(position);
                     intent.setPhotoPaths(imagePaths);
@@ -76,6 +79,44 @@ public class Activity_add extends AppCompatActivity {
         imagePaths.add("000000");
         gridAdapter = new GridAdapter(imagePaths);
         gridView.setAdapter(gridAdapter);
+        issueConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("NET","activity click");
+                String titleString = title.getText().toString();
+                String describeString = describetext.getText().toString();
+                String priceString = pricetext.getText().toString();
+                float price;
+                if(priceString!=null)
+                {
+                    try {
+                        price = Float.parseFloat(priceString);
+                    }
+                    catch (Exception e)
+                    {
+                        price = 0;
+                    }
+                }
+                else
+                    price = 0;
+
+                Record item = new Record(1,titleString,describeString,price,1,null,"unreviewed");
+                try {
+                    Log.d("NET","activity");
+                    item.uploadFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                /*$table->increments('id');
+                $table->string('title');
+                $table->integer('number');
+                $table->integer('user_id');
+                $table->float('price');
+                $table->text('description');
+                $table->string('image_file');
+                $table->enum('status', ['unreviewed', 'reviewed', 'rejected']);*/
+            }
+        });
     }
 
     @Override

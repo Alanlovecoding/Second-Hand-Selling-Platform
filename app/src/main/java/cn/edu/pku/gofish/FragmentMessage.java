@@ -49,6 +49,7 @@ public class FragmentMessage extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         MessageList = new ArrayList<Message1>();
+        idList = new ArrayList<Integer>();
         initData();
         messageAdapter=new MessageAdapter(MessageList,this.getContext());
         recyclerView.setAdapter(messageAdapter);

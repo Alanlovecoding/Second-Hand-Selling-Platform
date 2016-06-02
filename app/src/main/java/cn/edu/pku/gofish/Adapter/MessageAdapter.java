@@ -1,6 +1,7 @@
 package cn.edu.pku.gofish.Adapter;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.edu.pku.gofish.Model.Message1;
+import cn.edu.pku.gofish.MyDialogFragment;
 import cn.edu.pku.gofish.R;
 
 /**
@@ -24,6 +26,7 @@ import cn.edu.pku.gofish.R;
 public class MessageAdapter extends RecyclerView.Adapter {
     private List<Message1> MessageList;
     private Context context;
+    private FragmentManager fm;
     public MessageAdapter(List<Message1> _MessageList,Context context) {
         MessageList = _MessageList;
         this.context = context;
@@ -52,20 +55,25 @@ public class MessageAdapter extends RecyclerView.Adapter {
         holder.time.setText(message.TimeLine());
         holder.usrname.setText(message.UsrnameLine());
         holder.briefmessage.setText(message.BriefMessageLine());
-        holder.correct.setOnClickListener(new View.OnClickListener() {
+        holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
+                MyDialogFragment myDialogFragment = new MyDialogFragment();
+                myDialogFragment.setInterface(new MyDialogFragment.NoticeDialogListener() {
+                    @Override
+                    public void onDialogPositiveClick(String key) {
 
+                    }
 
+                    @Override
+                    public void onDialogNegativeClick(String key) {
+
+                    }
+                });
+                myDialogFragment.show(fm, "dialog_fragment");
+                return false;
             }
         });
-        holder.cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
     }
 
     public int getItemCount() {
@@ -86,12 +94,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
         {
             super(view);
             this.context = _context;
-            time = (TextView) view.findViewById(R.id.mvTime);
+
             usrname = (TextView) view.findViewById(R.id.mvusrname);
             briefmessage = (TextView) view.findViewById(R.id.mvbriefmessage);
             cardview = (LinearLayout) view.findViewById(R.id.cardview);
-            correct = (Button) view.findViewById(R.id.correct);
-            cancel = (Button) view.findViewById(R.id.cancel);
+
             /*cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
