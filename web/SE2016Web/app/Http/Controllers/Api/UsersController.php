@@ -49,9 +49,9 @@ class UsersController extends Controller
         $user->name = Input::get('name');
         $user->email = Input::get('email');
         if ($user->save()) {
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
         }
     }
 
@@ -65,7 +65,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return True;
+        return 1;
     }
 
     public function getItems($id)

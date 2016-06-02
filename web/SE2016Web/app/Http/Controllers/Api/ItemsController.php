@@ -41,17 +41,17 @@ class ItemsController extends Controller
         ]);
 
         $item = new Item;
-        $item->title = Input::get('title');
-        $item->number = Input::get('number');
-        $item->user_id = Input::get('user_id');
-        $item->price = Input::get('price');
-        $item->description = Input::get('description');
-        $item->status = Input::get('status');
+        $item->title = $request->input('title');
+        $item->number = $request->input('number');
+        $item->user_id = $request->input('user_id');
+        $item->price = $request->input('price');
+        $item->description = $request->input('description');
+        $item->status = $request->input('status');
 
         if ($item->save()) {
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
         }
     }
 
@@ -93,9 +93,9 @@ class ItemsController extends Controller
         $item->status = Input::get('status');
 
         if ($item->save()) {
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
         }
     }
 
@@ -109,6 +109,6 @@ class ItemsController extends Controller
     {
         $item = Item::find($id);
         $item->delete();
-        return True;
+        return 1;
     }
 }

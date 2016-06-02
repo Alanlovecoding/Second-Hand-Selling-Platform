@@ -31,7 +31,7 @@ class FavoritesController extends Controller
         $user = User::find($user_id);
         $item_id = Input::get('item_id');
         $user->favorites()->attach($item_id);
-        return True;
+        return 1;
     }
 
     /**
@@ -44,6 +44,6 @@ class FavoritesController extends Controller
     {
         $user = User::find($user_id);
         $user->favorites()->detach($item_id);
-        return True;
+        return 1;
     }
 }

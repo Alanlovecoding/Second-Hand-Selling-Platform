@@ -41,9 +41,9 @@ class TradeRequestsController extends Controller
         $trade_request->status = Input::get('status');
 
         if ($trade_request->save()) {
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
         }
     }
 
@@ -81,9 +81,9 @@ class TradeRequestsController extends Controller
         $trade_request->status = Input::get('status');
 
         if ($trade_request->save()) {
-            return True;
+            return 1;
         } else {
-            return False;
+            return 0;
         }
     }
 
@@ -97,6 +97,6 @@ class TradeRequestsController extends Controller
     {
         $trade_request = TradeRequest::find($id);
         $trade_request->delete();
-        return True;
+        return 1;
     }
 }
