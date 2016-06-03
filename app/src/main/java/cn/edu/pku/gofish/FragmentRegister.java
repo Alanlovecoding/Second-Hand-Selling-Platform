@@ -56,7 +56,7 @@ public class FragmentRegister extends DialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //register()
+                //register();
                 mListener.onDialogPositiveClick(key);
                 dismiss();
             }
@@ -79,14 +79,14 @@ public class FragmentRegister extends DialogFragment {
             return;
         }
         RequestParams params = new RequestParams();
-        params.put("username", usr);
+        params.put("name", usr);
         params.put("password", psw);
-        params.put("e_mail", e);
+        params.put("email", e);
         client.post(url, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
-
+                    key = 0;
             }
 
             @Override

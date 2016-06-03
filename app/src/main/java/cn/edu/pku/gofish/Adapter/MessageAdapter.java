@@ -61,12 +61,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
                 MyDialogFragment myDialogFragment = new MyDialogFragment();
                 myDialogFragment.setInterface(new MyDialogFragment.NoticeDialogListener() {
                     @Override
-                    public void onDialogPositiveClick(String key) {
+                    public void onDialogPositiveClick(int key) {
 
                     }
 
                     @Override
-                    public void onDialogNegativeClick(String key) {
+                    public void onDialogNegativeClick(int key) {
 
                     }
                 });

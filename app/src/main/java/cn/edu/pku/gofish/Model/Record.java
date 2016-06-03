@@ -1,6 +1,23 @@
 package cn.edu.pku.gofish.Model;
 
+
 import android.util.Log;
+
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceActivity;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+
+
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -15,10 +32,12 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+
 /**
  * Created by leonardo on 16/5/11.
  */
 public class Record {
+
     private int ID;
     private int user_id;
     int number;
@@ -28,9 +47,13 @@ public class Record {
     private ArrayList<String> imagePaths;
     private int imgcnt;
     private String usrname;
+
     private String status;
-    private File[] file;
-    AsyncHttpClient client = new AsyncHttpClient();
+
+
+    private Bitmap[] file;
+
+    static AsyncHttpClient client = new AsyncHttpClient();
 
     private String url = "http://gofish.hackpku.com:8003/api/items";
     public Record(int id)
@@ -59,10 +82,17 @@ public class Record {
 
     public void uploadFile() throws Exception {
         int count = 0;
+        FileInputStream fis=null;
         RequestParams params = new RequestParams();
         for (String tmp : imagePaths) {
-            file[count] = new File(tmp);
-            if (file[count].exists() && file[count].length() > 0) {
+            try {
+                fis=new FileInputStream(tmp);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            file[count] = bitmap;
+            if (file[count]!=null) {
                 count++;
             } else {
                 throw new Exception("FileNotFoundException");
@@ -77,6 +107,7 @@ public class Record {
         //params.put("image_file", image_file);
         params.put("status",status);
         Log.d("NET", "Record post begin"+params.toString());
+        client.setBasicAuth("username","password/token");
         client.post(url, params, new AsyncHttpResponseHandler() {
 
             @Override
@@ -94,6 +125,7 @@ public class Record {
 
     public void downloadFile()
     {
+
         client.get(url + "/"+ID, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -114,9 +146,16 @@ public class Record {
 
             }
         });
+
     }
+
     public String TextLine()
     {
         return usrname;
     }
+    public int getID(){return ID;}
+    public String getTitle(){return title;}
+    public String getDescribetext(){return describetext;}
+    public Bitmap[] getFile(){return file;}
+    public int getImgcnt(){return imgcnt;}
 }

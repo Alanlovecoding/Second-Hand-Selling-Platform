@@ -2,6 +2,8 @@ package cn.edu.pku.gofish.Adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import cn.edu.pku.gofish.Activity_record;
 import cn.edu.pku.gofish.Model.Record;
 import cn.edu.pku.gofish.R;
 
@@ -32,11 +36,13 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         Log.d("ViewHolder", "onCreateViewHolder, i: " + i);
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.view_item, viewGroup, false);
-        return new ViewHolder(v);
+        ViewHolder vh=new ViewHolder(v);
+        return vh;
     }
 
     @Override
@@ -44,8 +50,15 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         Log.d("ViewHolder", "onBindViewHolder, i: " + i + ", viewHolder: " + viewHolder);
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.position = i;
-        Record record = RecordList.get(i);
-
+        final Record record = RecordList.get(i);
+        holder.briefview.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(context, Activity_record.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("id",record.getID());
+                intent.putExtras(bundle);
+            }
+        });
         holder.information.setText(record.TextLine());
         holder.gridView.setAdapter(new ImageAdapter(context,i%4));
     }
@@ -62,16 +75,17 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         public int position;
         public GridView gridView;
         public ImageView imageView;
+        public LinearLayout briefview;
         public ViewHolder(View view)
         {
             super(view);
             information = (TextView) view.findViewById(R.id.textView);
             gridView=(GridView) view.findViewById(R.id.gridview);
             imageView=(ImageView) view.findViewById(R.id.ivPerson);
+            briefview=(LinearLayout) view.findViewById(R.id.briefview);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
 
                 }
             });

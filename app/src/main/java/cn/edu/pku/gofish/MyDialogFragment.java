@@ -15,13 +15,13 @@ public class MyDialogFragment extends DialogFragment {
 
     private Button cancelButton;
     private Button okButton;
-    private String key;
+    private int key;
     NoticeDialogListener mListener;
 
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(String key);
+        public void onDialogPositiveClick(int key);
 
-        public void onDialogNegativeClick(String key);
+        public void onDialogNegativeClick(int key);
     }
 
     public void setInterface(NoticeDialogListener _Listener)

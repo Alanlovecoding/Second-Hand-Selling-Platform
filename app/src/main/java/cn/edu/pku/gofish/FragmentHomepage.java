@@ -3,6 +3,7 @@ package cn.edu.pku.gofish;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class FragmentHomepage extends Fragment {
     private String url = "http://gofish.hackpku.com:8003/api/items";
     private ImageView search;
     private EditText searchText;
+    private SwipeRefreshLayout mSwipeLayout;
     AsyncHttpClient client = new AsyncHttpClient();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class FragmentHomepage extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
+        mSwipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.id_swipe_ly);
         RecordList = new ArrayList<Record>();
         idList = new ArrayList<Integer>();
         downloadList();
@@ -70,35 +73,39 @@ public class FragmentHomepage extends Fragment {
 
     public void initData()
     {
+        Log.d("NET","Homepage initData");
         for(int i=0;i<idList.size();i++)
         {
             int id = idList.get(i);
             String I = ""+id;
             Log.d("NET","Homepage"+I);
             Record tmp = new Record(id);
-            //tmp.downloadFile();
+            tmp.downloadFile();
             RecordList.add(tmp);
         }
     }
 
     public void refresh()
     {
+        downloadList();
         initData();
         recordCardAdapter.refresh(RecordList);
+        mSwipeLayout.setRefreshing(false);
     }
 
     public void downloadList()
     {
-        Log.d("NET","HomePage");
+        Log.d("NET", "HomePage");
         client.get(url, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("NET","HomePage get success");
+                Log.d("NET", "HomePage get success");
                 try {
                     JSONArray list = response;
 
-                    for (int i = 0; i < list.length() ; i++){
+                    for (int i = 0; i < list.length(); i++) {
                         idList.add(list.getInt(i));
+                        Log.d("NET", "HomePage get"+list.getInt(i));
                     }
 
                 } catch (JSONException e) {
@@ -111,5 +118,11 @@ public class FragmentHomepage extends Fragment {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    public void onRefresh()
+    {
+        refresh();
+
     }
 }
