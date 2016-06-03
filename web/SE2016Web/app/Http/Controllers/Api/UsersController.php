@@ -46,8 +46,8 @@ class UsersController extends Controller
             'email' => 'required'
         ]);
         $user = User::find($id);
-        $user->name = Input::get('name');
-        $user->email = Input::get('email');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
         if ($user->save()) {
             return 1;
         } else {

@@ -34,7 +34,7 @@ Route::group(['prefix' => 'api'], function () {
 	{
         Route::get('favorites', 'Api\FavoritesController@index');
         Route::post('favorites', 'Api\FavoritesController@store');
-        Route::delete('favorites/{item_id}', 'Api\FavoritesController@destroy');
+        Route::get('favorites/{item_id}/delete', 'Api\FavoritesController@destroy');
 
 		Route::get('items', 'Api\UsersController@getItems');
 		Route::get('trade_requests/sent', 'Api\UsersController@getSentRequests');

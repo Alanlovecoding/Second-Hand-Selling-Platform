@@ -34,11 +34,11 @@ class TradeRequestsController extends Controller
             'status' => 'required'
         ]);
         $trade_request = new TradeRequest;
-        $trade_request->user_id = Input::get('user_id');
-        $trade_request->item_id = Input::get('item_id');
-        $trade_request->number = Input::get('number');
-        $trade_request->message = Input::get('message');
-        $trade_request->status = Input::get('status');
+        $trade_request->user_id = $request->input('user_id');
+        $trade_request->item_id = $request->input('item_id');
+        $trade_request->number = $request->input('number');
+        $trade_request->message = $request->input('message');
+        $trade_request->status = $request->input('status');
 
         if ($trade_request->save()) {
             return 1;
@@ -74,11 +74,11 @@ class TradeRequestsController extends Controller
             'status' => 'required'
         ]);
         $trade_request = TradeRequest::find($id);
-        $trade_request->user_id = Input::get('user_id');
-        $trade_request->item_id = Input::get('item_id');
-        $trade_request->number = Input::get('number');
-        $trade_request->message = Input::get('message');
-        $trade_request->status = Input::get('status');
+        $trade_request->user_id = $request->input('user_id');
+        $trade_request->item_id = $request->input('item_id');
+        $trade_request->number = $request->input('number');
+        $trade_request->message = $request->input('message');
+        $trade_request->status = $request->input('status');
 
         if ($trade_request->save()) {
             return 1;

@@ -1,0 +1,26 @@
+URL                                 method      parameters                                      description
+auth/login                          POST        email,password                                  login
+auth/register                       POST        name,email,password                             register
+api/users                           GET         -                                               get all users(without password)
+api/users/{id}                      GET         -                                               get one user by id
+api/users/{id}                      PUT/PATCH   name,email                                      update a user
+api/users/{id}/delete               GET         -                                               delete a user(this is stupid and dangerous...)
+api/items                           GET         -                                               get all items
+api/items                           POST        title,number,user_id,price,description,status   add an item
+api/items/{id}                      GET         -                                               get one item by id
+api/items/{id}                      PUT/PATCH   title,number,user_id,price,description,status   update an item
+api/items/{id}/delete               GET         -                                               delete an item
+api/trade_requests                  GET         -                                               get all trade_requests
+api/trade_requests                  POST        user_id,item_id,number,status                   add a trade_request
+api/trade_requests/{id}             GET         -                                               get one trade_request by id
+api/trade_requests/{id}             PUT/PATCH   user_id,item_id,number,status                   update a trade_request
+api/trade_requests/{id}/delete      GET         -                                               delete a trade_request
+api/users/{user_id}/favorites       GET         -                                               get all favorites of a user
+api/users/{user_id}/favorites       POST        item_id                                         add a favorite to a user
+api/users/{user_id}/favorites       GET         -                                               delete a favorite from a user
+    /{item_id}/delete
+api/users/{user_id}/items           GET         -                                               get all items published by a user
+api/users/{user_id}                 GET         -                                               get all trade_requests sent by a user
+    /trade_requests/sent
+api/users/{user_id}                 GET         -                                               get all trade_requests received by a user
+    /trade_requests/received

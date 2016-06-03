@@ -29,7 +29,7 @@ class FavoritesController extends Controller
     public function store(Request $request, $user_id)
     {
         $user = User::find($user_id);
-        $item_id = Input::get('item_id');
+        $item_id = $request->input('item_id');
         $user->favorites()->attach($item_id);
         return 1;
     }
