@@ -34,10 +34,12 @@
                 android:text="$ [编辑]"
                 android:id="@+id/textView"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/ivPerson"
+                android:layout_toEndOf="@+id/ivPerson"
+                android:gravity="left|center" />
         </RelativeLayout>
 
         <GridView

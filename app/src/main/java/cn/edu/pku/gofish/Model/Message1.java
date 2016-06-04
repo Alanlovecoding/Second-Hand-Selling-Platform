@@ -1,5 +1,7 @@
 package cn.edu.pku.gofish.Model;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,10 +19,10 @@ import cz.msebera.android.httpclient.Header;
 //消息界面中的每一个栏目
 
 public class Message1 {
-    String time;
+    private String time;
     String usrname;
     private String briefmessage;
-    String url;
+    String url = "http://gofish.hackpku.com:8003/api/trade_requests";
     AsyncHttpClient client = new AsyncHttpClient();
     private int ID;
     private int user_id;
@@ -49,20 +51,33 @@ public class Message1 {
     }
     public String UsrnameLine()
     {
-        return usrname;
+        return ""+user_id;
     }
     public String BriefMessageLine()
     {
         return briefmessage;
     }
 
-    public void uploadFile(String url) throws Exception {
+    NoticeDialogListener mListener = null;
+    public interface NoticeDialogListener {
+        public void onDialogPositiveClick();
+
+        public void onDialogNegativeClick();
+    }
+    public void setInterface(NoticeDialogListener _Listener)
+    {
+        mListener = _Listener;
+        Log.d("Register", "go");
+    }
+
+    public void uploadFile() throws Exception {
 
         RequestParams params = new RequestParams();
-
+        //user_id,item_id,number,status
         params.put("user_id", user_id);
         params.put("item_id", item_id);
-        params.put("message", briefmessage);
+        //params.put("message", briefmessage);
+        params.put("number",0);
         params.put("status",status);
         client.post(url, params, new AsyncHttpResponseHandler() {
 
@@ -88,7 +103,11 @@ public class Message1 {
                     item_id = Integer.parseInt(response.getString("item_id"));
                     briefmessage = response.getString("message");
                     status= response.getString("status");
-
+                    time = response.getString("created_at");
+                    if(mListener!=null)
+                    {
+                        mListener.onDialogPositiveClick();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -97,6 +116,10 @@ public class Message1 {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                if(mListener!=null)
+                {
+                    mListener.onDialogPositiveClick();
+                }
             }
         });
     }

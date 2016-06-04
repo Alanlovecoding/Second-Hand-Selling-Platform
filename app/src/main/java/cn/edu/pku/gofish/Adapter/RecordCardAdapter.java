@@ -55,12 +55,16 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
             public void onClick(View v){
                 Intent intent = new Intent(context, Activity_record.class);
                 Bundle bundle=new Bundle();
+                Log.d("NET","RecordCardAdapter record ID "+record.getID());
                 bundle.putInt("id",record.getID());
                 intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
-        holder.information.setText(record.TextLine());
-        holder.gridView.setAdapter(new ImageAdapter(context,i%4));
+        Log.d("NET","RecordCardAdapter"+record.getDescribetext());
+        holder.information.setText(record.getDescribetext());
+        holder.gridView.setAdapter(new ImageAdapter(context,0));
+
     }
 
     @Override

@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.List;
 
+import cn.edu.pku.gofish.FragmentCheck;
 import cn.edu.pku.gofish.Model.Message1;
-import cn.edu.pku.gofish.MyDialogFragment;
 import cn.edu.pku.gofish.R;
 
 /**
@@ -27,12 +30,17 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private List<Message1> MessageList;
     private Context context;
     private FragmentManager fm;
+    AsyncHttpClient client = new AsyncHttpClient();
+
     public MessageAdapter(List<Message1> _MessageList,Context context) {
         MessageList = _MessageList;
         this.context = context;
 
     }
-
+    public void setMessageManager(FragmentManager fm)
+    {
+        this.fm = fm;
+    }
     public void refresh(List<Message1> _RecordList)
     {
         MessageList = _RecordList;
@@ -52,22 +60,23 @@ public class MessageAdapter extends RecyclerView.Adapter {
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.position = i;
         Message1 message = MessageList.get(i);
-        holder.time.setText(message.TimeLine());
+
         holder.usrname.setText(message.UsrnameLine());
-        holder.briefmessage.setText(message.BriefMessageLine());
+        holder.briefmessage.setText("send time: "+message.TimeLine()+"\r\n"+"brief message: "+message.BriefMessageLine());
+
         holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                MyDialogFragment myDialogFragment = new MyDialogFragment();
-                myDialogFragment.setInterface(new MyDialogFragment.NoticeDialogListener() {
+                FragmentCheck myDialogFragment = new FragmentCheck();
+                myDialogFragment.setInterface(new FragmentCheck.NoticeDialogListener() {
                     @Override
                     public void onDialogPositiveClick(int key) {
-
+                        Toast.makeText(context, "同意", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onDialogNegativeClick(int key) {
-
+                        Toast.makeText(context, "拒绝", Toast.LENGTH_LONG).show();
                     }
                 });
                 myDialogFragment.show(fm, "dialog_fragment");

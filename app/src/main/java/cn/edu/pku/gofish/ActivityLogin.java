@@ -1,23 +1,23 @@
 package cn.edu.pku.gofish;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /**
  * Created by leonardo on 16/6/2.
  */
-public class ActivityLogin extends Activity{
+public class ActivityLogin extends FragmentActivity {
     private EditText userName, password;
     private Button btn_login, btn_visitor;
     private CheckBox savePass;
@@ -25,7 +25,7 @@ public class ActivityLogin extends Activity{
     private SharedPreferences sharedPreferences;
     private FragmentRegister register;
     String url;
-    AsyncHttpClient client = new AsyncHttpClient();
+    SyncHttpClient client = new SyncHttpClient();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,6 +43,7 @@ public class ActivityLogin extends Activity{
             public void onClick(View v) {
                 userNameValue = userName.getText().toString();
                 passwordValue = password.getText().toString();
+                USR.usr_id = 1;
                 jump2Logon();
             }
         });
@@ -52,11 +53,10 @@ public class ActivityLogin extends Activity{
             public void onClick(View v) {
                 if (register == null) {
                     register = new FragmentRegister();
-                    register.setInterface( new FragmentRegister.NoticeDialogListener() {
+                    register.setInterface(new FragmentRegister.NoticeDialogListener() {
                         public void onDialogPositiveClick(int key) {
-                            if(key == 0)
-                            {
-                                jump2Logon();
+                            if (key == 0) {
+
                             }
                         }
 
@@ -66,6 +66,8 @@ public class ActivityLogin extends Activity{
                     });
 
                 }
+                register.show(getSupportFragmentManager(),"dialog_fragment");
+
             }});
     }
     public void login()

@@ -1,35 +1,25 @@
 package cn.edu.pku.gofish.Model;
 
 
-import android.util.Log;
-
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceActivity;
-import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import java.io.File;
-import java.io.*;
-import java.util.ArrayList;
-
-
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import cn.edu.pku.gofish.Exception.MyException;
+import cn.edu.pku.gofish.USR;
 import cz.msebera.android.httpclient.Header;
 
 
@@ -53,9 +43,23 @@ public class Record {
 
     private Bitmap[] file;
 
-    static AsyncHttpClient client = new AsyncHttpClient();
+    static SyncHttpClient client = new SyncHttpClient();
+    static AsyncHttpClient client2 = new AsyncHttpClient();
 
     private String url = "http://gofish.hackpku.com:8003/api/items";
+
+    NoticeDialogListener mListener = null;
+    public interface NoticeDialogListener {
+        public void onDialogPositiveClick();
+
+        public void onDialogNegativeClick();
+    }
+    public void setInterface(NoticeDialogListener _Listener)
+    {
+        mListener = _Listener;
+        Log.d("Register","go");
+    }
+
     public Record(int id)
     {
         ID = id;
@@ -80,7 +84,7 @@ public class Record {
         this.status =  status;
     }
 
-    public void uploadFile() throws Exception {
+    public void uploadFile() throws MyException{
         int count = 0;
         FileInputStream fis=null;
         RequestParams params = new RequestParams();
@@ -95,30 +99,31 @@ public class Record {
             if (file[count]!=null) {
                 count++;
             } else {
-                throw new Exception("FileNotFoundException");
+                throw new MyException("FileNotFoundException");
             }
         }
+
         params.put("title", title);
         params.put("number", number);
-        //params.put("user_id", usrname);
-
+        params.put("user_id", USR.usr_id);
         params.put("price", price);
         params.put("description", describetext);
         //params.put("image_file", image_file);
         params.put("status",status);
-        Log.d("NET", "Record post begin"+params.toString());
-        client.setBasicAuth("username","password/token");
-        client.post(url, params, new AsyncHttpResponseHandler() {
+        Log.d("NET", "Record post begin" + params.toString());
+
+        client2.post(url, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                Log.d("NET","Record post done");
-
+                Log.d("NET", "Record post done");
+                mListener.onDialogPositiveClick();
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable){
-                Log.d("NET","Record post failed"+bytes);
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("NET", "Record post failed" + bytes);
+                mListener.onDialogNegativeClick();
             }
         });
     }
@@ -126,7 +131,7 @@ public class Record {
     public void downloadFile()
     {
 
-        client.get(url + "/"+ID, null, new JsonHttpResponseHandler() {
+        client2.get(url + "/"+ID, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -135,6 +140,11 @@ public class Record {
                     price = Float.parseFloat(response.getString("price"));
                     String description = response.getString("description");
                     describetext = description;
+                    Log.d("NET","Record "+user_id+" "+number+" "+price+" "+describetext);
+                    if(mListener!=null)
+                    {
+                        mListener.onDialogPositiveClick();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -143,13 +153,16 @@ public class Record {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-
+                if(mListener!=null)
+                {
+                    mListener.onDialogPositiveClick();
+                }
             }
         });
 
     }
 
-    public String TextLine()
+    public String getName()
     {
         return usrname;
     }

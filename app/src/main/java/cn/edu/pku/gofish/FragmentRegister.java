@@ -2,13 +2,14 @@ package cn.edu.pku.gofish;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -22,16 +23,17 @@ public class FragmentRegister extends DialogFragment {
     private EditText username,e_mail,password,password_makesure;
     String url;
     NoticeDialogListener mListener;
-    AsyncHttpClient client = new AsyncHttpClient();
+    SyncHttpClient client = new SyncHttpClient();
+
     public interface NoticeDialogListener {
         public void onDialogPositiveClick(int key);
 
         public void onDialogNegativeClick(int key);
     }
-
-    public void setInterface(NoticeDialogListener _Listener)
+   public void setInterface(NoticeDialogListener _Listener)
     {
         mListener = _Listener;
+        Log.d("Register","go");
     }
 
     @Override
