@@ -23,6 +23,8 @@ Route::group(['prefix' => 'api'], function () {
 	//xp cannot sent DELETE request, so all destroy actions are seperatedly routed
 	Route::resource('users', 'Api\UsersController', ['except' => ['create', 'store', 'edit', 'destroy']]);
 	Route::get('users/{id}/delete', 'Api\UsersController@destroy');
+	Route::post('login', 'Api\UsersController@login');
+	Route::post('register', 'Api\UsersController@register');
 
 	Route::resource('items', 'Api\ItemsController', ['except' => ['create', 'edit', 'destroy']]);
 	Route::get('items/{id}/delete', 'Api\ItemsController@destroy');

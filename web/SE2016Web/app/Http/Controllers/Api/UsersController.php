@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
+use Validator;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Item;
-use App\TradeRequest;
+
 class UsersController extends Controller
 {
     /**
@@ -66,6 +68,42 @@ class UsersController extends Controller
         $user = User::find($id);
         $user->delete();
         return 1;
+    }
+
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        $email = $request->input('email');
+        $password = $request->input('password');
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            return User::where('email', $email)->get();
+        }
+        else {
+            return 0;
+        }
+    }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6',
+        ]);
+        if(!$validator->fails()) {
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('$password')),
+            ]);
+            Auth::login($user);
+            return User::where('email', $request->input('email'))->get();
+        }
+        else {
+            return 0;
+        }
     }
 
     public function getItems($id)
