@@ -115,12 +115,12 @@ class UsersController extends Controller
     public function getSentRequests($id)
     {
         $user = User::find($id);
-        return $user->sent_trade_requests()->orderBy('updated_at', 'desc')->get();
+        return $user->sent_trade_requests()->orderBy('updated_at', 'desc')->get()->pluck('id');
     }
 
     public function getReceivedRequests($id)
     {
         $user = User::find($id);
-        return $user->received_trade_requests()->orderBy('updated_at', 'desc')->get();
+        return $user->received_trade_requests()->orderBy('updated_at', 'desc')->get()->pluck('id');
     }
 }
