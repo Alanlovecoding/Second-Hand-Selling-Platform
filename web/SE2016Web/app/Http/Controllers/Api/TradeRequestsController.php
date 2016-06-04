@@ -30,13 +30,12 @@ class TradeRequestsController extends Controller
         $this->validate($request, [
             'user_id' => 'required',
             'item_id' => 'required',
-            'number' => 'required',
+            'message' => 'required',
             'status' => 'required'
         ]);
         $trade_request = new TradeRequest;
         $trade_request->user_id = $request->input('user_id');
         $trade_request->item_id = $request->input('item_id');
-        $trade_request->number = $request->input('number');
         $trade_request->message = $request->input('message');
         $trade_request->status = $request->input('status');
 
@@ -70,13 +69,12 @@ class TradeRequestsController extends Controller
         $this->validate($request, [
             'user_id' => 'required',
             'item_id' => 'required',
-            'number' => 'required',
+            'message' => 'required',
             'status' => 'required'
         ]);
         $trade_request = TradeRequest::find($id);
         $trade_request->user_id = $request->input('user_id');
         $trade_request->item_id = $request->input('item_id');
-        $trade_request->number = $request->input('number');
         $trade_request->message = $request->input('message');
         $trade_request->status = $request->input('status');
 
