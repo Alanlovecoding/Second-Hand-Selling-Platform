@@ -109,7 +109,7 @@ class UsersController extends Controller
     public function getItems($id)
     {
         $user = User::find($id);
-        return $user->items()->orderBy('updated_at', 'desc')->get();
+        return $user->items()->orderBy('updated_at', 'desc')->get()->pluck('id');
     }
 
     public function getSentRequests($id)

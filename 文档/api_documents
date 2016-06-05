@@ -21,7 +21,7 @@ api/users/{user_id}/favorites       POST        item_id                         
 api/users/{user_id}/favorites       GET         -                                               delete a favorite from a user                       1
     /{item_id}/delete
 api/users/{user_id}/items           GET         -                                               get all items published by a user                   items
-api/users/{user_id}                 GET         -                                               get all trade_requests sent by a user               trade_requests
+api/users/{user_id}                 GET         -                                               get all trade_requests sent by a user               trade_request_ids
     /trade_requests/sent
-api/users/{user_id}                 GET         -                                               get all trade_requests received by a user           trade_requests
+api/users/{user_id}                 GET         -                                               get all trade_requests received by a user           trade_request_ids
     /trade_requests/received
