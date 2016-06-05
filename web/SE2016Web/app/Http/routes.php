@@ -22,7 +22,7 @@ Route::controllers([
 Route::group(['prefix' => 'api'], function () {
 	//xp cannot sent DELETE request, so all destroy actions are seperatedly routed
 	//also he cannot sent PUT, so update are seperatedly routed
-	Route::resource('users', 'Api\UsersController', ['only' => ['index']]);
+	Route::resource('users', 'Api\UsersController', ['only' => ['index', 'show']]);
 	Route::post('users/{id}', 'Api\UsersController@update');
 	Route::get('users/{id}/delete', 'Api\UsersController@destroy');
 	Route::post('login', 'Api\UsersController@login');
