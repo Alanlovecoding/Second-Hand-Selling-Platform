@@ -7,6 +7,7 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ImagesController
 use App\User;
 use App\Item;
 use App\TradeRequest;

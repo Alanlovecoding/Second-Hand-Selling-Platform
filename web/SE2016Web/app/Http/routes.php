@@ -21,15 +21,19 @@ Route::controllers([
 
 Route::group(['prefix' => 'api'], function () {
 	//xp cannot sent DELETE request, so all destroy actions are seperatedly routed
-	Route::resource('users', 'Api\UsersController', ['except' => ['create', 'store', 'edit', 'destroy']]);
+	//also he cannot sent PUT, so update are seperatedly routed
+	Route::resource('users', 'Api\UsersController', ['only' => ['index']]);
+	Route::post('users/{id}', 'Api\UsersController@update');
 	Route::get('users/{id}/delete', 'Api\UsersController@destroy');
 	Route::post('login', 'Api\UsersController@login');
 	Route::post('register', 'Api\UsersController@register');
 
-	Route::resource('items', 'Api\ItemsController', ['except' => ['create', 'edit', 'destroy']]);
+	Route::resource('items', 'Api\ItemsController', ['only' => ['index', 'store', 'show']]);
+	Route::post('items/{id}', 'Api\ItemsController@update');
 	Route::get('items/{id}/delete', 'Api\ItemsController@destroy');
 
-	Route::resource('trade_requests', 'Api\TradeRequestsController', ['except' => ['create', 'edit', 'destroy']]);
+	Route::resource('trade_requests', 'Api\TradeRequestsController', ['only' => ['index', 'store', 'show']]);
+	Route::post('trade_requests/{id}', 'Api\TradeRequestsController@update');
 	Route::get('trade_requests/{id}/delete', 'Api\TradeRequestsController@destroy');
 
 	Route::group(['prefix' => 'users/{user_id}'], function()

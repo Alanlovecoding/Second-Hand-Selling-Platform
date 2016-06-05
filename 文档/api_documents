@@ -4,23 +4,23 @@ api/login                           POST        email,password                  
 api/register                        POST        name,email,password                             register                                            user/0
 api/users                           GET         -                                               get all users(without password)                     users
 api/users/{id}                      GET         -                                               get one user by id                                  user
-api/users/{id}                      PUT/PATCH   name,email                                      update a user                                       1/0
+api/users/{id}                      POST   name,email                                      update a user                                       1/0
 api/users/{id}/delete               GET         -                                               delete a user(this is stupid and dangerous...)      1
 api/items                           GET         -                                               get all items                                       item_ids
 api/items                           POST        title,number,user_id,price,description,status   add an item                                         1/0
 api/items/{id}                      GET         -                                               get one item by id                                  item
-api/items/{id}                      PUT/PATCH   title,number,user_id,price,description,status   update an item                                      1/0
+api/items/{id}                      POST   title,number,user_id,price,description,status   update an item                                      1/0
 api/items/{id}/delete               GET         -                                               delete an item                                      1
 api/trade_requests                  GET         -                                               get all trade_requests                              trade_requests
 api/trade_requests                  POST        user_id,item_id,message,status                  add a trade_request                                 1/0
 api/trade_requests/{id}             GET         -                                               get one trade_request by id                         trade_request
-api/trade_requests/{id}             PUT/PATCH   user_id,item_id,message,status                  update a trade_request                              1/0
+api/trade_requests/{id}             POST   user_id,item_id,message,status                  update a trade_request                              1/0
 api/trade_requests/{id}/delete      GET         -                                               delete a trade_request                              1
 api/users/{user_id}/favorites       GET         -                                               get all favorites of a user                         item_ids
 api/users/{user_id}/favorites       POST        item_id                                         add a favorite to a user                            1
 api/users/{user_id}/favorites       GET         -                                               delete a favorite from a user                       1
     /{item_id}/delete
-api/users/{user_id}/items           GET         -                                               get all items published by a user                   items
+api/users/{user_id}/items           GET         -                                               get all items published by a user                   item_ids
 api/users/{user_id}                 GET         -                                               get all trade_requests sent by a user               trade_request_ids
     /trade_requests/sent
 api/users/{user_id}                 GET         -                                               get all trade_requests received by a user           trade_request_ids
