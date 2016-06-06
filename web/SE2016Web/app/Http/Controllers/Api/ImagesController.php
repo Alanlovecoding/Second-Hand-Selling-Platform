@@ -16,6 +16,7 @@ class ImagesController extends Controller
             'item_id' => 'required',
             'image_file' => 'image',
         ]);
+        return $request->all();
         if ($request->hasFile('image_file')) {
             $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
             Storage::put('images/' . $file_name, $request->file('image_file'));
