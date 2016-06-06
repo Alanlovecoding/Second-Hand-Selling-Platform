@@ -10,6 +10,24 @@ use App\Http\Requests;
 
 class ImagesController extends Controller
 {
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'item_id' => 'required',
+            'image_file' => 'image',
+        ]);
+        if ($request->hasFile('image_file')) {
+            $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
+            Storage::put('images/' . $file_name, $request->file('image_file'));
+            $item->image_file = $file_name;
+            return $file_name;
+        }
+        else {
+            $item->image_file = '';
+            return 0;
+        }
+    }
+
     public function show($image_file)
     {
         $file = Storage::get('images/' . $image_file);

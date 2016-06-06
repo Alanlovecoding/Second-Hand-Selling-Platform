@@ -31,6 +31,7 @@ Route::group(['prefix' => 'api'], function () {
 	Route::resource('items', 'Api\ItemsController', ['only' => ['index', 'store', 'show']]);
 	Route::post('items/{id}', 'Api\ItemsController@update');
 	Route::get('items/{id}/delete', 'Api\ItemsController@destroy');
+	Route::get('items/{id}/images', 'Api\ItemsController@images');
 
 	Route::resource('trade_requests', 'Api\TradeRequestsController', ['only' => ['index', 'store', 'show']]);
 	Route::post('trade_requests/{id}', 'Api\TradeRequestsController@update');
@@ -47,6 +48,7 @@ Route::group(['prefix' => 'api'], function () {
 		Route::get('trade_requests/received', 'Api\UsersController@getReceivedRequests');
 	});
 
+	Route::post('images', 'Api\ImagesController@store');
 	Route::get('images/{image_file}', 'Api\ImagesController@show');
 	Route::get('images/{image_file}/delete', 'Api\ImagesController@destroy');
 });

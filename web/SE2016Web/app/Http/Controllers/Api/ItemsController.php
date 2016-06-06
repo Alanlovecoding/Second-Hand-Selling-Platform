@@ -50,19 +50,7 @@ class ItemsController extends Controller
         $item->price = $request->input('price');
         $item->description = $request->input('description');
         $item->status = $request->input('status');
-        if ($request->hasFile('image_file')) {
-            $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
-            Storage::put('images/' . $file_name, $request->file('image_file'));
-            #$file = $request->file('image_file');
-            #$file->move('images', $file_name);
-            $item->image_file = $file_name;
-        }
-        else {
-            $item->image_file = '';
-        }
-        if($request->has('image_file')) {
-            return 'fuckme';
-        }
+
         if ($item->save()) {
             return 1;
         } else {
@@ -125,5 +113,11 @@ class ItemsController extends Controller
         $item = Item::find($id);
         $item->delete();
         return 1;
+    }
+
+    public function images($id)
+    {
+        $item = Item::find($id);
+        return $item->images()->pluck('filename');
     }
 }

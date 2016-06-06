@@ -20,4 +20,9 @@ class Item extends Model
     {
         return $this->belongsToMany('App\User', 'favorites');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\Images');
+    }
 }
