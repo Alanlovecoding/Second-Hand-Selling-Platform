@@ -7,7 +7,7 @@ use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ImagesController
+use App\Http\Controllers\ImagesController;
 use App\User;
 use App\Item;
 use App\TradeRequest;
@@ -39,7 +39,7 @@ class ItemsController extends Controller
             'price' => 'required',
             'description' => 'required',
             'status' => 'required',
-            'image_file' => 'image'
+            'image_file' => 'image',
         ]);
 
         $item = new Item;
