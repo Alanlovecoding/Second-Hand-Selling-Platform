@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Crypt;
+use Hash;
 use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -78,10 +80,11 @@ class UsersController extends Controller
         ]);
         $email = $request->input('email');
         $password = $request->input('password');
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['email' => $email, 'password' =>$password])) {
             return User::where('email', $email)->get();
         }
         else {
+            return User::where('email', $email)->first()->getAuthPassword();
             return 0;
         }
     }
@@ -96,7 +99,7 @@ class UsersController extends Controller
             $user = User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                'password' => bcrypt($request->input('$password')),
+                'password' => Hash::make($request->input('password')),
             ]);
             Auth::login($user);
             return User::where('email', $request->input('email'))->get();
