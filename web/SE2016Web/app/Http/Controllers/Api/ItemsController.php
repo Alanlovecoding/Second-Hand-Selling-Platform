@@ -60,7 +60,7 @@ class ItemsController extends Controller
         else {
             $item->image_file = '';
             if($request->has('image_file')) {
-                return $request->file('image_file')->getError();
+                return 'fuckme';
             }
         }
         if ($item->save()) {
