@@ -18,20 +18,10 @@
         android:id="@+id/cardview"
         android:weightSum="1">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/mvPerson"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/icon_me_black" />
-        </RelativeLayout>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
@@ -40,6 +30,7 @@
                 android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:layout_weight="0.5" />
             <TextView
                 android:id="@+id/mvbriefmessage"
@@ -47,31 +38,33 @@
                 android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 android:layout_weight="0.5" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
             android:orientation="vertical"
-            android:layout_weight="0.1"
-            android:weightSum="1"
-            android:layout_gravity="right"
-            android:gravity="right">
-
-            <Button
-                android:id="@+id/correct"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/mvtime"
+                android:text="[时间]"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="同意" />
-            <Button
-                android:id="@+id/cancel"
+                android:textSize="12sp"
+                android:layout_weight="0.5" />
+            <TextView
+                android:id="@+id/mvstate"
+                android:text="[状态]"
+                android:singleLine="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="拒绝" />
+                android:textSize="12sp"
+                android:layout_weight="0.5" />
         </LinearLayout>
-
 
     </LinearLayout>
 

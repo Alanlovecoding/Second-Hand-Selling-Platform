@@ -1,6 +1,6 @@
 package cn.edu.pku.gofish.Model;
 
-import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -40,7 +40,7 @@ public class Message {
     }
 
     private String url = "/api/items";
-    AsyncHttpClient client = new AsyncHttpClient();
+    SyncHttpClient client = new SyncHttpClient();
     public void uploadFile(String url) throws Exception {
         RequestParams params = new RequestParams();
 

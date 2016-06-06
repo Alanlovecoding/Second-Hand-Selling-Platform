@@ -1,8 +1,11 @@
 package cn.edu.pku.gofish;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.ImageCaptureManager;
@@ -23,8 +28,9 @@ import com.foamtrace.photopicker.intent.PhotoPreviewIntent;
 
 import org.json.JSONArray;
 
-import java.io.File;
 import java.util.ArrayList;
+
+import cn.edu.pku.gofish.Model.Record;
 
 public class Activity_add extends AppCompatActivity {
     private static final int REQUEST_CAMERA_CODE = 10;
@@ -37,10 +43,23 @@ public class Activity_add extends AppCompatActivity {
     private EditText title;
     private EditText describetext;
     private EditText pricetext;
+    private TextView issueConfirm;
     private String TAG =Activity_add.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
@@ -48,6 +67,7 @@ public class Activity_add extends AppCompatActivity {
         title = (EditText) findViewById(R.id.addTitle);
         describetext = (EditText) findViewById(R.id.editText1);
         pricetext = (EditText) findViewById(R.id.addPrice);
+        issueConfirm = (TextView) findViewById(R.id.IssueConfirm);
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 3 ? 3 : cols;
         gridView.setNumColumns(cols);
@@ -56,15 +76,14 @@ public class Activity_add extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String imgs = (String) parent.getItemAtPosition(position);
-                if ("000000".equals(imgs) ){
+                if ("000000".equals(imgs)) {
                     PhotoPickerIntent intent = new PhotoPickerIntent(Activity_add.this);
                     intent.setSelectModel(SelectModel.MULTI);
                     intent.setShowCarema(true); // 是否显示拍照
                     intent.setMaxTotal(9); // 最多选择照片数量，默认为9
                     intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
                     startActivityForResult(intent, REQUEST_CAMERA_CODE);
-                }
-                else{
+                } else {
                     PhotoPreviewIntent intent = new PhotoPreviewIntent(Activity_add.this);
                     intent.setCurrentItem(position);
                     intent.setPhotoPaths(imagePaths);
@@ -76,6 +95,60 @@ public class Activity_add extends AppCompatActivity {
         imagePaths.add("000000");
         gridAdapter = new GridAdapter(imagePaths);
         gridView.setAdapter(gridAdapter);
+        issueConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("NET","activity click");
+                String titleString = title.getText().toString();
+                String describeString = describetext.getText().toString();
+                String priceString = pricetext.getText().toString();
+                float price;
+                if(priceString!=null)
+                {
+                    try {
+                        price = Float.parseFloat(priceString);
+                    }
+                    catch (Exception e)
+                    {
+                        price = 0;
+                    }
+                }
+                else
+                    price = 0;
+
+                Record item = new Record(USR.usr_id,titleString,describeString,price,1,null,"unreviewed");
+                item.setInterface(new Record.NoticeDialogListener(){
+
+                    @Override
+                    public void onDialogPositiveClick() {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+
+                    @Override
+                    public void onDialogNegativeClick() {
+                        Message message = new Message();
+                        message.what = 0;
+                        handler.sendMessage(message);
+                    }
+                });
+                try {
+                    Log.d("NET","activity");
+                    item.uploadFile();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                /*$table->increments('id');
+                $table->string('title');
+                $table->integer('number');
+                $table->integer('user_id');
+                $table->float('price');
+                $table->text('description');
+                $table->string('image_file');
+                $table->enum('status', ['unreviewed', 'reviewed', 'rejected']);*/
+            }
+        });
     }
 
     @Override
@@ -183,6 +256,22 @@ public class Activity_add extends AppCompatActivity {
             public ImageView image;
         }
     }
+
+    public Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    Toast.makeText(Activity_add.this, "publish success", Toast.LENGTH_LONG).show();
+                    Activity_add.this.finish();
+                    break;
+                case 0:
+                    Toast.makeText(Activity_add.this, "publish failed", Toast.LENGTH_LONG).show();
+                    Activity_add.this.finish();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
 }
 

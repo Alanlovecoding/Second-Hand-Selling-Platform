@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
+
     <RelativeLayout android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_alignParentTop="true"
@@ -43,12 +44,19 @@
 
 
     </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/id_swipe_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homepage_recordlist_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity"
         android:layout_below="@+id/top" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--ListView
         android:layout_width="match_parent"

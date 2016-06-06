@@ -3,9 +3,11 @@ package cn.edu.pku.gofish;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,11 @@ public class FragmentHomepage extends Fragment {
     private RecordCardAdapter recordCardAdapter;
     private List<Record> RecordList;
     private List<Integer> idList;
-    private String url = "/api/items/index";
+    private String url = "http://gofish.hackpku.com:8003/api/items";
     private ImageView search;
     private EditText searchText;
+    private SwipeRefreshLayout mSwipeLayout;
+    private boolean flag = true;
     AsyncHttpClient client = new AsyncHttpClient();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class FragmentHomepage extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.homepage_recordlist_recyclerview);
         search = (ImageView) getActivity().findViewById(R.id.ivSearchText);
@@ -54,9 +58,11 @@ public class FragmentHomepage extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
+        mSwipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.id_swipe_ly);
         RecordList = new ArrayList<Record>();
         idList = new ArrayList<Integer>();
-        initData();
+        downloadList();
+        Log.d("NET", "homepage card");
         recordCardAdapter = new RecordCardAdapter(RecordList,getContext());
         recyclerView.setAdapter(recordCardAdapter);
         search.setOnClickListener(new View.OnClickListener() {
@@ -65,39 +71,82 @@ public class FragmentHomepage extends Fragment {
                 String tmp = searchText.getText().toString();
             }
         });
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                downloadList();
+                flag = false;
+            }
+        });
+
     }
 
-    public void initData()
-    {
+    public void initData() {
+        Log.d("NET", "Homepage initData");
         for(int i=0;i<idList.size();i++)
         {
             int id = idList.get(i);
+            String I = ""+id;
             Record tmp = new Record(id);
-            tmp.downloadFile();
             RecordList.add(tmp);
+            RecordList.get(i).downloadFile();
         }
+
+
     }
 
     public void refresh()
     {
-        initData();
-        recordCardAdapter.refresh(RecordList);
+
+        Log.d("NET", "Homepage refresh");
+        RecordList.clear();
+        for(int i=0;i<idList.size();i++)
+        {
+            int id = idList.get(i);
+            String I = ""+id;
+            Log.d("NET", "Homepage" + I);
+            Record tmp = new Record(id);
+            RecordList.add(tmp);
+            //if(i == idList.size()-1)
+            //{
+                RecordList.get(i).setInterface(new Record.NoticeDialogListener(){
+
+                    @Override
+                    public void onDialogPositiveClick() {
+                        newPage();
+                    }
+
+                    @Override
+                    public void onDialogNegativeClick() {
+
+                    }
+                });
+            //}
+            RecordList.get(i).downloadFile();
+        }
+
+        mSwipeLayout.setRefreshing(false);
+        Log.d("NET","homepage refresh FALSE");
     }
 
-    public void downloadList(String url)
+    public void downloadList()
     {
+        Log.d("NET", "HomePage");
+        mSwipeLayout.setRefreshing(true);
         client.get(url, null, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("NET", "HomePage get success");
                 try {
-                    JSONArray list;
-                    if(response.has("list"))
-                    {
-                        list = response.getJSONArray("list");
-                        for (int i = 0; i < list.length() ; i++){
-                            idList.add(list.getInt(i));
-                        }
+                    JSONArray list = response;
+                    idList.clear();
+                    for (int i = 0; i < list.length(); i++) {
+                        idList.add(list.getInt(i));
+                        Log.d("NET", "HomePage get "+list.getInt(i));
                     }
+
+                    refresh();
+                    mSwipeLayout.setRefreshing(false);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -109,5 +158,10 @@ public class FragmentHomepage extends Fragment {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    public void newPage()
+    {
+        recordCardAdapter.refresh(RecordList);
     }
 }

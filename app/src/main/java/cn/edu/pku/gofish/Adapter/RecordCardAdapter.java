@@ -4,7 +4,6 @@ package cn.edu.pku.gofish.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.BundleCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,12 +55,16 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
             public void onClick(View v){
                 Intent intent = new Intent(context, Activity_record.class);
                 Bundle bundle=new Bundle();
+                Log.d("NET","RecordCardAdapter record ID "+record.getID());
                 bundle.putInt("id",record.getID());
                 intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
-        holder.information.setText(record.TextLine());
-        holder.gridView.setAdapter(new ImageAdapter(context,i%4));
+        Log.d("NET","RecordCardAdapter"+record.getDescribetext());
+        holder.information.setText(record.getDescribetext());
+        holder.gridView.setAdapter(new ImageAdapter(context,0));
+
     }
 
     @Override
