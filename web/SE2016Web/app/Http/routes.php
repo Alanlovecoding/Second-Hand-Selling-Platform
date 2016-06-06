@@ -46,4 +46,7 @@ Route::group(['prefix' => 'api'], function () {
 		Route::get('trade_requests/sent', 'Api\UsersController@getSentRequests');
 		Route::get('trade_requests/received', 'Api\UsersController@getReceivedRequests');
 	});
+
+	Route::get('images/{image_file}', 'Api\ImagesController@show');
+	Route::get('images/{image_file}/delete', 'Api\ImagesController@destroy');
 });

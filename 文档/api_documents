@@ -9,7 +9,7 @@ api/users/{id}/delete               GET         -                               
 api/items                           GET         -                                               get all items                                       item_ids
 api/items                           POST        title,number,user_id,price,description,status   add an item                                         1/0
 api/items/{id}                      GET         -                                               get one item by id                                  item
-api/items/{id}                      POST   title,number,user_id,price,description,status   update an item                                      1/0
+api/items/{id}                      POST        title,number,user_id,price,description,status   update an item                                      1/0
 api/items/{id}/delete               GET         -                                               delete an item                                      1
 api/trade_requests                  GET         -                                               get all trade_requests                              trade_requests
 api/trade_requests                  POST        user_id,item_id,message,status                  add a trade_request                                 1/0
@@ -25,3 +25,5 @@ api/users/{user_id}                 GET         -                               
     /trade_requests/sent
 api/users/{user_id}                 GET         -                                               get all trade_requests received by a user           trade_request_ids
     /trade_requests/received
+api/images/{image_file}             GET         -                                               get an image                                        the image
+api/images/{image_file}/delete      GET         -                                               delete an image                                     1

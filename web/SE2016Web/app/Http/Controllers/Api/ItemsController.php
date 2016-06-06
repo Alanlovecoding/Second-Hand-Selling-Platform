@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use DB;
-
+use Storage;
+use Crypt;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ImagesController;
@@ -49,7 +50,16 @@ class ItemsController extends Controller
         $item->price = $request->input('price');
         $item->description = $request->input('description');
         $item->status = $request->input('status');
-
+        if ($request->hasFile('image_file')) {
+            $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
+            Storage::put('images/' . $file_name, $request->file('image_file'));
+            #$file = $request->file('image_file');
+            #$file->move('images', $file_name);
+            $item->image_file = $file_name;
+        }
+        else {
+            $item->image_file = '';
+        }
         if ($item->save()) {
             return 1;
         } else {
