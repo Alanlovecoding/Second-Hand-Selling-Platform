@@ -40,7 +40,7 @@ class ItemsController extends Controller
             'price' => 'required',
             'description' => 'required',
             'status' => 'required',
-            'image_file' => 'image',
+            'image_file' => 'required|image',
         ]);
 
         $item = new Item;

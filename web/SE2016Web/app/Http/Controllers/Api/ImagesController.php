@@ -17,10 +17,8 @@ class ImagesController extends Controller
             'image_file' => 'image',
         ]);
         if ($request->hasFile('image_file')) {
-            return 'fuckme';
             $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
             Storage::put('images/' . $file_name, $request->file('image_file'));
-            $item->image_file = $file_name;
             return $file_name;
         }
         else {
