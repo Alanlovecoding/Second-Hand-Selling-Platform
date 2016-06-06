@@ -52,7 +52,7 @@ class ItemsController extends Controller
         $item->status = $request->input('status');
 
         if ($item->save()) {
-            return 1;
+            return $item->id;
         } else {
             return 0;
         }
