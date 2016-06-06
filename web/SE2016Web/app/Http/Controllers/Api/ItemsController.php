@@ -59,9 +59,9 @@ class ItemsController extends Controller
         }
         else {
             $item->image_file = '';
-            if($request->has('image_file')) {
-                return 'fuckme';
-            }
+        }
+        if($request->has('image_file')) {
+            return 'fuckme';
         }
         if ($item->save()) {
             return 1;
