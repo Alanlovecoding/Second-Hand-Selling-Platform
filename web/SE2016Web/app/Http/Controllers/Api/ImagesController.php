@@ -12,12 +12,11 @@ class ImagesController extends Controller
 {
     public function store(Request $request)
     {
-        return $request->all();
         $this->validate($request, [
             'item_id' => 'required',
             'image_file' => 'required|image'
         ]);
-        
+
         if ($request->hasFile('image_file')) {
             $file_name = Crypt::encrypt($item->title . strval($item->user_id)) . '.jpg';
             Storage::put('images/' . $file_name, $request->file('image_file'));
