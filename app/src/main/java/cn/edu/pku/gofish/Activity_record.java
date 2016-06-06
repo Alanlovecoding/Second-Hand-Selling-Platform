@@ -266,7 +266,7 @@ public class Activity_record extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                Log.d("NET", "favorite delete failed");
+                Log.d("NET", "favorite delete failed "+responseString);
                 Toast.makeText(getApplicationContext(), "delete favorite failed", Toast.LENGTH_LONG).show();
             }
         });
@@ -287,7 +287,7 @@ public class Activity_record extends AppCompatActivity {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                Log.d("NET", "request send done");
+                Log.d("NET", "request send done"+new String(bytes));
                 Toast.makeText(getApplicationContext(), "send request success", Toast.LENGTH_LONG).show();
 
             }

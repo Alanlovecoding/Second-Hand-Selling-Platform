@@ -2,7 +2,6 @@ package cn.edu.pku.gofish;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -33,7 +32,10 @@ import java.util.ArrayList;
 
 import cn.edu.pku.gofish.Model.Record;
 
-public class Activity_add extends AppCompatActivity {
+/**
+ * Created by leonardo on 16/6/6.
+ */
+public class ActivityChange extends AppCompatActivity {
     private static final int REQUEST_CAMERA_CODE = 10;
     private static final int REQUEST_PREVIEW_CODE = 20;
     private ArrayList<String> imagePaths = new ArrayList<>();
@@ -47,6 +49,8 @@ public class Activity_add extends AppCompatActivity {
     private TextView issueConfirm;
     private String TAG =Activity_add.class.getSimpleName();
 
+    int id;
+    Record record;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -79,14 +83,14 @@ public class Activity_add extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String imgs = (String) parent.getItemAtPosition(position);
                 if ("000000".equals(imgs)) {
-                    PhotoPickerIntent intent = new PhotoPickerIntent(Activity_add.this);
+                    PhotoPickerIntent intent = new PhotoPickerIntent(ActivityChange.this);
                     intent.setSelectModel(SelectModel.MULTI);
                     intent.setShowCarema(true); // 是否显示拍照
                     intent.setMaxTotal(9); // 最多选择照片数量，默认为9
                     intent.setSelectedPaths(imagePaths); // 已选中的照片地址， 用于回显选中状态
                     startActivityForResult(intent, REQUEST_CAMERA_CODE);
                 } else {
-                    PhotoPreviewIntent intent = new PhotoPreviewIntent(Activity_add.this);
+                    PhotoPreviewIntent intent = new PhotoPreviewIntent(ActivityChange.this);
                     intent.setCurrentItem(position);
                     intent.setPhotoPaths(imagePaths);
                     startActivityForResult(intent, REQUEST_PREVIEW_CODE);
@@ -97,36 +101,39 @@ public class Activity_add extends AppCompatActivity {
         imagePaths.add("000000");
         gridAdapter = new GridAdapter(imagePaths);
         gridView.setAdapter(gridAdapter);
+        issueConfirm.setText("修改请求");
         issueConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("NET","activity click");
+                Log.d("NET", "activity click");
                 String titleString = title.getText().toString();
                 String describeString = describetext.getText().toString();
                 String priceString = pricetext.getText().toString();
                 String num = numbertext.getText().toString();
                 float price;
                 int number;
-                if(priceString!=null)
-                {
-                    try {price = Float.parseFloat(priceString);}
-                    catch (Exception e) {price = 0;}
-                }
-                else {
+                if (priceString != null) {
+                    try {
+                        price = Float.parseFloat(priceString);
+                    } catch (Exception e) {
+                        price = 0;
+                    }
+                } else {
                     price = 0;
 
                 }
-                if(num != null)
-                {
-                    try {number = Integer.parseInt(num);}
-                    catch (Exception e) {number = 0;}
-                }else{number = 0;}
-                Log.d("NET", "Activity add done "+gridAdapter.getItem(0));
-                String path2 = Environment.getExternalStorageDirectory()
-                        .getPath();
-
-                Record item = new Record(USR.usr_id,titleString,describeString,price,number,gridAdapter.getItem(0),"unreviewed");
-                item.setInterface(new Record.NoticeDialogListener(){
+                if (num != null) {
+                    try {
+                        number = Integer.parseInt(num);
+                    } catch (Exception e) {
+                        number = 0;
+                    }
+                } else {
+                    number = 0;
+                }
+                Record item = new Record(USR.usr_id, titleString, describeString, price, number, null, "unreviewed");
+                item.setID(record.getID());
+                item.setInterface(new Record.NoticeDialogListener() {
 
                     @Override
                     public void onDialogPositiveClick() {
@@ -144,21 +151,31 @@ public class Activity_add extends AppCompatActivity {
                 });
                 try {
                     Log.d("NET", "activity");
-                    item.uploadFile();
-
+                    item.changeFile();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                /*$table->increments('id');
-                $table->string('title');
-                $table->integer('number');
-                $table->integer('user_id');
-                $table->float('price');
-                $table->text('description');
-                $table->string('image_file');
-                $table->enum('status', ['unreviewed', 'reviewed', 'rejected']);*/
             }
         });
+
+        Bundle bundle=this.getIntent().getExtras();
+        id=bundle.getInt("id");
+        record=new Record(id);
+        record.setInterface(new Record.NoticeDialogListener() {
+
+            @Override
+            public void onDialogPositiveClick() {
+                newPage();
+                Log.d("NET", "activity page refresh");
+            }
+
+            @Override
+            public void onDialogNegativeClick() {
+
+            }
+        });
+        record.downloadFile();
+
     }
 
     @Override
@@ -207,7 +224,7 @@ public class Activity_add extends AppCompatActivity {
     }
 
     private class GridAdapter extends BaseAdapter {
-        public ArrayList<String> listUrls;     //添加一个默认图片路径，存放到List中
+        private ArrayList<String> listUrls;     //添加一个默认图片路径，存放到List中
         //private int mMaxPosition;
         private LayoutInflater inflater;
 
@@ -217,7 +234,7 @@ public class Activity_add extends AppCompatActivity {
             {
                 listUrls.remove(listUrls.size()-1);
             }
-            inflater = LayoutInflater.from(Activity_add.this);
+            inflater = LayoutInflater.from(ActivityChange.this);
         }
 
         public int getCount() {
@@ -252,7 +269,7 @@ public class Activity_add extends AppCompatActivity {
                 holder.image.setImageResource(R.drawable.square_plus_icon);
             }
             else {
-                Glide.with(Activity_add.this)
+                Glide.with(ActivityChange.this)
                         .load(path)
                         .placeholder(R.mipmap.default_error)
                         .error(R.mipmap.default_error)
@@ -271,17 +288,25 @@ public class Activity_add extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    Toast.makeText(Activity_add.this, "publish success", Toast.LENGTH_LONG).show();
-                    //Activity_add.this.finish();
+                    Toast.makeText(ActivityChange.this, "change success", Toast.LENGTH_LONG).show();
+                    ActivityChange.this.finish();
                     break;
                 case 0:
-                    Toast.makeText(Activity_add.this, "publish failed", Toast.LENGTH_LONG).show();
-                    //Activity_add.this.finish();
+                    Toast.makeText(ActivityChange.this, "change failed", Toast.LENGTH_LONG).show();
+                    ActivityChange.this.finish();
                     break;
             }
             super.handleMessage(msg);
         }
     };
 
-}
+    public void newPage()
+    {
+        title.setText(record.getTitle());
+        describetext.setText(record.getDescribetext());
+        gridView.invalidate();
+        title.invalidate();
+        describetext.invalidate();
 
+    }
+}

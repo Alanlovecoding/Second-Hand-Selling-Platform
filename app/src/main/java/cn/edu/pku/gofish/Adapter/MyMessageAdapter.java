@@ -16,23 +16,20 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.List;
 
-import cn.edu.pku.gofish.FragmentCheck;
+import cn.edu.pku.gofish.FragmentItemCheck;
 import cn.edu.pku.gofish.Model.Message1;
 import cn.edu.pku.gofish.R;
 
 /**
- * Created by Iris on 16/5/13.
+ * Created by leonardo on 16/6/6.
  */
-
-//消息页面中的Adapter
-
-public class MessageAdapter extends RecyclerView.Adapter {
+public class MyMessageAdapter extends RecyclerView.Adapter {
     private List<Message1> MessageList;
     private Context context;
     private FragmentManager fm;
     AsyncHttpClient client = new AsyncHttpClient();
 
-    public MessageAdapter(List<Message1> _MessageList,Context context) {
+    public MyMessageAdapter(List<Message1> _MessageList,Context context) {
         MessageList = _MessageList;
         this.context = context;
 
@@ -67,18 +64,18 @@ public class MessageAdapter extends RecyclerView.Adapter {
         holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                FragmentCheck myDialogFragment = new FragmentCheck();
-                myDialogFragment.setInterface(new FragmentCheck.NoticeDialogListener() {
+                FragmentItemCheck myDialogFragment = new FragmentItemCheck();
+                myDialogFragment.setInterface(new FragmentItemCheck.NoticeDialogListener() {
                     @Override
                     public void onDialogPositiveClick(int key) {
-                        Toast.makeText(context, "同意", Toast.LENGTH_LONG).show();
-                        message.uploadFile(true);
+                        //Toast.makeText(context, "同意", Toast.LENGTH_LONG).show();
+                        //message.uploadFile(true);
                     }
 
                     @Override
                     public void onDialogNegativeClick(int key) {
-                        Toast.makeText(context, "拒绝", Toast.LENGTH_LONG).show();
-                        message.uploadFile(false);
+                        Toast.makeText(context, "删除", Toast.LENGTH_LONG).show();
+                        message.deleteFile();
                     }
                 });
                 myDialogFragment.show(fm, "dialog_fragment");
@@ -118,9 +115,10 @@ public class MessageAdapter extends RecyclerView.Adapter {
 
                 }
             });*/
-           // usrpic = (ImageView) view.findViewById(R.id.mvPerson);
+            // usrpic = (ImageView) view.findViewById(R.id.mvPerson);
 
         }
 
     }
 }
+

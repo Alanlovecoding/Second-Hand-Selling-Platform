@@ -17,7 +17,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.pku.gofish.Adapter.RecordCardAdapter;
+import cn.edu.pku.gofish.Adapter.MyRecordAdapter;
 import cn.edu.pku.gofish.Model.Record;
 import cz.msebera.android.httpclient.Header;
 
@@ -26,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class ActivityMyItem extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecordCardAdapter recordCardAdapter;
+    private MyRecordAdapter recordCardAdapter;
     private List<Record> RecordList;
     private List<Integer> idList;
     private SwipeRefreshLayout mSwipeLayout;
@@ -46,7 +46,8 @@ public class ActivityMyItem extends AppCompatActivity {
         RecordList = new ArrayList<Record>();
         idList = new ArrayList<Integer>();
         downloadList();
-        recordCardAdapter = new RecordCardAdapter(RecordList,getApplicationContext());
+        recordCardAdapter = new MyRecordAdapter(RecordList,getApplicationContext());
+        recordCardAdapter.setMessageManager(getSupportFragmentManager());
         recyclerView.setAdapter(recordCardAdapter);
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
