@@ -14,7 +14,7 @@ class ImagesController extends Controller
     {
         $this->validate($request, [
             'item_id' => 'required',
-            'image_file' => 'image',
+            'image_file' => 'required|image'
         ]);
         return $request->all();
         if ($request->hasFile('image_file')) {
