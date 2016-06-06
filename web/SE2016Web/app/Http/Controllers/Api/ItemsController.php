@@ -38,7 +38,8 @@ class ItemsController extends Controller
             'user_id' => 'required',
             'price' => 'required',
             'description' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'image_file' => 'image'
         ]);
 
         $item = new Item;

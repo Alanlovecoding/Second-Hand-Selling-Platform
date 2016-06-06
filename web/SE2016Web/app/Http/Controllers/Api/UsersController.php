@@ -81,10 +81,9 @@ class UsersController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
         if (Auth::attempt(['email' => $email, 'password' =>$password])) {
-            return User::where('email', $email)->get();
+            return User::where('email', $email)->first();
         }
         else {
-            return User::where('email', $email)->first()->getAuthPassword();
             return 0;
         }
     }
@@ -102,7 +101,7 @@ class UsersController extends Controller
                 'password' => Hash::make($request->input('password')),
             ]);
             Auth::login($user);
-            return User::where('email', $request->input('email'))->get();
+            return User::where('email', $request->input('email'))->first();
         }
         else {
             return 0;
