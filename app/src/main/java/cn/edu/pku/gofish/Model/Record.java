@@ -84,7 +84,7 @@ public class Record {
         this.status =  status;
     }
 
-    public void uploadFile() throws MyException{
+    public void uploadFile() throws MyException{        //upload a request, include describetext,private,etc
         int count = 0;
         FileInputStream fis=null;
         RequestParams params = new RequestParams();
@@ -103,7 +103,7 @@ public class Record {
             }
         }
 
-        params.put("title", title);
+        params.put("title", title);          //put info in a params
         params.put("number", number);
         params.put("user_id", USR.usr_id);
         params.put("price", price);
@@ -112,23 +112,23 @@ public class Record {
         params.put("status",status);
         Log.d("NET", "Record post begin" + params.toString());
 
-        client2.post(url, params, new AsyncHttpResponseHandler() {
+        client2.post(url, params, new AsyncHttpResponseHandler() {       //send the params to url
 
             @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {      //if success
                 Log.d("NET", "Record post done");
                 mListener.onDialogPositiveClick();
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {   //what to do if fail
                 Log.d("NET", "Record post failed" + bytes);
                 mListener.onDialogNegativeClick();
             }
         });
     }
 
-    public void downloadFile()
+    public void downloadFile()        //download a file
     {
 
         client2.get(url + "/"+ID, null, new JsonHttpResponseHandler() {

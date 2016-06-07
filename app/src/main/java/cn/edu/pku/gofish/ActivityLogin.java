@@ -26,7 +26,7 @@ public class ActivityLogin extends FragmentActivity {
     private FragmentRegister register;
     String url;
     SyncHttpClient client = new SyncHttpClient();
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {      //get the feature,set a listener for login button
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
@@ -40,7 +40,7 @@ public class ActivityLogin extends FragmentActivity {
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {           //set listener for login button
                 userNameValue = userName.getText().toString();
                 passwordValue = password.getText().toString();
                 USR.usr_id = 1;
@@ -50,7 +50,7 @@ public class ActivityLogin extends FragmentActivity {
 
         btn_visitor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {        //set listener for signin button
                 if (register == null) {
                     register = new FragmentRegister();
                     register.setInterface(new FragmentRegister.NoticeDialogListener() {
