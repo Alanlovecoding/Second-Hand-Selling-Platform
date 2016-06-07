@@ -2,6 +2,8 @@ package cn.edu.pku.gofish.Model;
 
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -13,10 +15,11 @@ import com.loopj.android.http.SyncHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -268,7 +271,7 @@ public class Record {
     public void postPhoto(String item_id) throws MyException{
         Log.d("NET", "Record uploadfile begin");
         int count = 0;
-        FileInputStream fis=null;
+        FileInputStream fis = null;
         RequestParams params = new RequestParams();
 
         File file = null;
@@ -279,15 +282,17 @@ public class Record {
         }
         params.put("item_id", item_id);
 
-        if(file.exists()&& file.length()>0)
+        if(file.exists()&& file.length()>0) {
             try {
-                //params.put("image_file", file,"application/octet-stream");
+                //params.put("", file);
                 Log.d("NET", "Record image_file " + file.toString());
                 int length = (int) file.length();
 
                 byte[] bytes = new byte[length];
 
                 FileInputStream in = new FileInputStream(file);
+                BufferedInputStream buf = new BufferedInputStream(in);
+                Bitmap bitmap = BitmapFactory.decodeStream(buf);
                 try {
                     in.read(bytes);
                 } catch (IOException e) {
@@ -301,12 +306,27 @@ public class Record {
                 }
 
                 String contents = new String(bytes);
-                params.put("image_file", new ByteArrayInputStream(bytes),"application/octet-stream");
+                File sdCard = Environment.getExternalStorageDirectory();
+                File dir = new File(sdCard.getAbsolutePath() + "/dir1/dir2");
+                dir.mkdirs();
+                File file2 = new File(dir, "mytextfile.jpg");
 
-                Log.d("NET","content "+contents);
+                FileOutputStream f = new FileOutputStream(file2, false);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
+                f.flush();
+                f.close();
+                Log.d("NET", "write done ");
+
+                params.put("image_file", file2);
+
+                Log.d("NET", "content " + contents);
             } catch (FileNotFoundException e) {
+                Log.d("NET", "file not exist");
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
         Log.d("NET", "Record post begin " + params.toString());
 
@@ -320,9 +340,14 @@ public class Record {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.d("NET", "Record post photo failed" + " "+i+" "+new String(bytes) );
+                Log.d("NET", "Record post photo failed" + " "+i );
+                if(bytes!=null)
+                {
+                    Log.d("NET", "Record post photo byte" + " "+new String(bytes) );
+                }
 
             }
         });
     }
+
 }
