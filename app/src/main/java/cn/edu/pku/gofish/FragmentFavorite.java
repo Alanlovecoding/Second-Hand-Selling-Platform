@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +75,8 @@ public class FragmentFavorite extends Fragment {
         for(int i=0;i<idList.size();i++)
         {
             int id = idList.get(i);
-            Record tmp = new Record(id);
+            String idt= String.valueOf(id);
+            Record tmp = new Record(idt);
             tmp.downloadFile();
             RecordList.add(tmp);
         }
@@ -90,7 +92,8 @@ public class FragmentFavorite extends Fragment {
             int id = idList.get(i);
             String I = ""+id;
             Log.d("NET", "favorite" + I);
-            Record tmp = new Record(id);
+            String idt=String.valueOf(id);
+            Record tmp = new Record(idt);
             RecordList.add(tmp);
             //if(i == idList.size()-1)
             //{

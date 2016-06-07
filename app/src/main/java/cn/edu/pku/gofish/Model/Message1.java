@@ -57,7 +57,7 @@ public class Message1 {
     {
         return briefmessage;
     }
-
+    public String getStatus(){return status;}
     NoticeDialogListener mListener = null;
     public interface NoticeDialogListener {
         public void onDialogPositiveClick();
@@ -70,42 +70,46 @@ public class Message1 {
         Log.d("Register", "go");
     }
 
-    public void uploadFile() throws Exception {
+    public void uploadFile(boolean flag){
 
         RequestParams params = new RequestParams();
         //user_id,item_id,number,status
         params.put("user_id", user_id);
         params.put("item_id", item_id);
-        //params.put("message", briefmessage);
-        params.put("number",0);
-        params.put("status",status);
-        client.post(url, params, new AsyncHttpResponseHandler() {
+        params.put("message", briefmessage);
+        if(flag)//reviewed unreviewed rejected
+            params.put("status","reviewed");
+        else
+            params.put("status", "rejected");
+        client.post(url + "/" + ID, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
-
+                Log.d("NET", "message1 success" + new String(bytes));
             }
 
             @Override
-            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable){
-
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("NET", "message1 failed" + new String(bytes));
             }
         });
     }
 
     public void downloadFile()
     {
-        client.get(url + "/"+ID, null, new JsonHttpResponseHandler() {
+        client.get(url + "/" + ID, null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
+                    Log.d("NET", "message1 status downsuccess " + response.toString());
                     user_id = Integer.parseInt(response.getString("user_id"));
                     item_id = Integer.parseInt(response.getString("item_id"));
                     briefmessage = response.getString("message");
-                    status= response.getString("status");
+                    status = response.getString("status");
+                    if (status == null || status.equals(""))
+                        status = "unreviewed";
                     time = response.getString("created_at");
-                    if(mListener!=null)
-                    {
+                    if (mListener != null) {
                         mListener.onDialogPositiveClick();
                     }
                 } catch (JSONException e) {
@@ -116,30 +120,24 @@ public class Message1 {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
-                if(mListener!=null)
-                {
+                if (mListener != null) {
                     mListener.onDialogPositiveClick();
                 }
             }
         });
     }
 
-    public void update(String url)
-    {
-        RequestParams params = new RequestParams();
-
-        params.put("id", ID);
-        params.put("status",status);
-        client.post(url, params, new AsyncHttpResponseHandler() {
+    public void deleteFile(){
+        client.get(url + "/" + ID+"/delete", null, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
-
+                Log.d("NET", "message1 delete success" + new String(bytes));
             }
 
             @Override
-            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable){
-
+            public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("NET", "message1 delete failed" + new String(bytes));
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class FragmentMe extends Fragment {
         MyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("NET", "fragment me ");
                 Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMyItem.class);
                 getContext().startActivity(intent);
             }
@@ -37,6 +39,7 @@ public class FragmentMe extends Fragment {
         MyReceive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("NET", "fragment me ");
                 Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMyReceiveRequest.class);
                 getContext().startActivity(intent);
             }
@@ -45,6 +48,7 @@ public class FragmentMe extends Fragment {
         MySend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("NET", "fragment me ");
                 Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMySendRequest.class);
                 getContext().startActivity(intent);
             }

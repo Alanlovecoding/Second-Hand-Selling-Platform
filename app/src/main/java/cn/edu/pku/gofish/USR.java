@@ -10,4 +10,5 @@ public  class  USR {
     static public String usrname;
     static public int usr_id;
     static public List<Integer> favoriteList = new ArrayList<Integer>();
+    static public String email;
 }

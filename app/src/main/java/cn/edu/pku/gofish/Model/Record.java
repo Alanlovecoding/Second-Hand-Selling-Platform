@@ -3,6 +3,7 @@ package cn.edu.pku.gofish.Model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -14,8 +15,12 @@ import com.loopj.android.http.SyncHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import cn.edu.pku.gofish.Exception.MyException;
@@ -28,12 +33,12 @@ import cz.msebera.android.httpclient.Header;
  */
 public class Record {
 
-    private int ID;
-    private int user_id;
-    int number;
+    private String ID;         //record unique number
+    private String user_id;
+    private String number;      //item number
     private String title;
     private String describetext;
-    private float price;
+    private String price;
     private ArrayList<String> imagePaths;
     private int imgcnt;
     private String usrname;
@@ -43,10 +48,10 @@ public class Record {
 
     private Bitmap[] file;
 
-    static SyncHttpClient client = new SyncHttpClient();
+    static SyncHttpClient client = new SyncHttpClient();       //used for communicate with the server
     static AsyncHttpClient client2 = new AsyncHttpClient();
 
-    private String url = "http://gofish.hackpku.com:8003/api/items";
+    private String url = "http://gofish.hackpku.com:8003/api/items";       //the server
 
     NoticeDialogListener mListener = null;
     public interface NoticeDialogListener {
@@ -60,19 +65,25 @@ public class Record {
         Log.d("Register","go");
     }
 
-    public Record(int id)
+    public Record(String id)
     {
         ID = id;
     }
-    public Record(int user_id, String _title, String _describetext, float _pricetext, int _number,ArrayList<String> _imagePaths,String status) {
+    public void setID(String ID)
+    {
+        this.ID = ID;
+    }
+    String impath;       //impath is the path of the upload photo
+    public Record(String user_id, String _title, String _describetext, String _pricetext, String _number,String _imagePaths,String status) {
         title = _title;
         describetext = _describetext;
         price = _pricetext;
 
         this.user_id = user_id;
         number = _number;
+        impath = _imagePaths;
         //file=new File[9];
-        if(imagePaths!=null) {
+        /*if(imagePaths!=null) {
             imagePaths = _imagePaths;
             imgcnt = imagePaths.size();
         }
@@ -80,15 +91,16 @@ public class Record {
             imgcnt = 0;
             imagePaths = new ArrayList<String>();
 
-        }
+        }*/
         this.status =  status;
     }
 
-    public void uploadFile() throws MyException{        //upload a request, include describetext,private,etc
+    public void uploadFile() throws MyException{
+        Log.d("NET", "Record uploadfile begin");
         int count = 0;
         FileInputStream fis=null;
         RequestParams params = new RequestParams();
-        for (String tmp : imagePaths) {
+        /*for (String tmp : imagePaths) {
             try {
                 fis=new FileInputStream(tmp);
             } catch (FileNotFoundException e) {
@@ -101,21 +113,87 @@ public class Record {
             } else {
                 throw new MyException("FileNotFoundException");
             }
-        }
+        }*/
 
         params.put("title", title);          //put info in a params
         params.put("number", number);
         params.put("user_id", USR.usr_id);
         params.put("price", price);
         params.put("description", describetext);
-        //params.put("image_file", image_file);
+        /*if(file.exists()&& file.length()>0)
+            try {
+                params.put("image_file", file);
+             Log.d("NET", "Record image_file    " + file.toString());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }*/
+        params.put("status",status);
+        Log.d("NET", "Record post begin " + params.toString());
+
+        client2.post(url, params, new AsyncHttpResponseHandler() {       //send the params to url,for now upload one photo
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("NET", "Record post done"+new String(bytes));
+                mListener.onDialogPositiveClick();
+                try {
+                    postPhoto(new String(bytes));      //upload one photo
+                } catch (MyException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("NET", "Record post failed" + " "+i+" "+new String(bytes));
+                mListener.onDialogNegativeClick();
+            }
+        });
+    }
+
+    public void changeFile() throws MyException {
+        int count = 0;
+        FileInputStream fis=null;
+        RequestParams params = new RequestParams();
+        /*for (String tmp : imagePaths) {
+            try {
+                fis=new FileInputStream(tmp);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            file[count] = bitmap;
+            if (file[count]!=null) {
+                count++;
+            } else {
+                throw new MyException("FileNotFoundException");
+            }
+        }*/
+
+
+        File file = null;
+        try {
+            file = new File(impath);
+        }catch(Exception e){
+
+        }
+        params.put("title", title);
+        params.put("number", number);
+        params.put("user_id", USR.usr_id);
+        params.put("price", price);
+        params.put("description", describetext);
+        try {
+            params.put("image_file", file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         params.put("status",status);
         Log.d("NET", "Record post begin" + params.toString());
 
-        client2.post(url, params, new AsyncHttpResponseHandler() {       //send the params to url
+        client2.post(url+"/"+ID, params, new AsyncHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {      //if success
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 Log.d("NET", "Record post done");
                 mListener.onDialogPositiveClick();
             }
@@ -135,9 +213,9 @@ public class Record {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    user_id = Integer.parseInt(response.getString("user_id"));
-                    number = Integer.parseInt(response.getString("number"));
-                    price = Float.parseFloat(response.getString("price"));
+                    user_id = response.getString("user_id");
+                    number = response.getString("number");
+                    price = response.getString("price");
                     String description = response.getString("description");
                     describetext = description;
                     Log.d("NET","Record "+user_id+" "+number+" "+price+" "+describetext);
@@ -162,13 +240,116 @@ public class Record {
 
     }
 
+    public void deleteFile()
+    {
+
+        client2.get(url + "/"+ID+"/delete", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("NET","Record delete success"+user_id+" "+number+" "+price+" "+describetext);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("NET", "Record delete failed" + user_id + " " + number + " " + price + " " + describetext);
+            }
+        });
+
+    }
+
     public String getName()
     {
         return usrname;
     }
-    public int getID(){return ID;}
+    public String getID(){return ID;}
     public String getTitle(){return title;}
     public String getDescribetext(){return describetext;}
     public Bitmap[] getFile(){return file;}
     public int getImgcnt(){return imgcnt;}
+    public String getPrice(){return price;}
+    public String getNumber(){return number;}
+
+    public void postPhoto(String item_id) throws MyException{     //upload a photo,the argument is the number of the record
+        Log.d("NET", "Record uploadfile begin");
+        int count = 0;
+        FileInputStream fis = null;
+        RequestParams params = new RequestParams();
+
+        File file = null;
+        try {
+            file = new File(impath);       //open the upload picture to file
+        }catch(Exception e){
+
+        }
+        params.put("item_id", item_id);
+
+        if(file.exists()&& file.length()>0) {      //if file exist and length>0
+            try {
+                //params.put("", file);
+                Log.d("NET", "Record image_file " + file.toString());
+                int length = (int) file.length();
+
+                byte[] bytes = new byte[length];
+
+                FileInputStream in = new FileInputStream(file);
+                BufferedInputStream buf = new BufferedInputStream(in);
+                Bitmap bitmap = BitmapFactory.decodeStream(buf);      //change it to a bitmap
+                try {
+                    in.read(bytes);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                String contents = new String(bytes);
+                File sdCard = Environment.getExternalStorageDirectory();
+                File dir = new File(sdCard.getAbsolutePath() + "/dir1/dir2");    //put the upload picture to a new path
+                dir.mkdirs();
+                File file2 = new File(dir, "mytextfile.jpg");    //give it a new name
+
+                FileOutputStream f = new FileOutputStream(file2, false);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
+                f.flush();
+                f.close();
+                Log.d("NET", "write done ");
+
+                params.put("image_file", file2);      //put the file2 to params
+
+                Log.d("NET", "content " + contents);
+            } catch (FileNotFoundException e) {
+                Log.d("NET", "file not exist");
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("NET", "Record post begin " + params.toString());
+
+        client2.post("http://gofish.hackpku.com:8003/api/images", params, new AsyncHttpResponseHandler() {    //post them
+
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                Log.d("NET", "Record post photo done" + new String(bytes));
+
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.d("NET", "Record post photo failed" + " "+i );
+                if(bytes!=null)
+                {
+                    Log.d("NET", "Record post photo byte" + " "+new String(bytes) );
+                }
+
+            }
+        });
+    }
+
 }

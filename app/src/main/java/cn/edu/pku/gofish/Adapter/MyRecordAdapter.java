@@ -1,9 +1,9 @@
 package cn.edu.pku.gofish.Adapter;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,23 +14,32 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
-import cn.edu.pku.gofish.Activity_record;
+import cn.edu.pku.gofish.ActivityChange;
+import cn.edu.pku.gofish.FragmentMyCheck;
 import cn.edu.pku.gofish.Model.Record;
 import cn.edu.pku.gofish.R;
 
-//this class is used for management of the homepage records. Users are not able to modify or delete it.
-public class RecordCardAdapter extends RecyclerView.Adapter {
+/**
+ * Created by leonardo on 16/6/6.
+ */
+// this class is for user's record management, user can modify or delete his records
+public class MyRecordAdapter extends RecyclerView.Adapter {
     private List<Record> RecordList;
     private Context context;
-    public RecordCardAdapter(List<Record> _RecordList,Context context) {
+    public MyRecordAdapter(List<Record> _RecordList,Context context) {
         RecordList = _RecordList;
         this.context = context;
     }
-
-    public void refresh(List<Record> _RecordList)      //refresh the list
+    private FragmentManager fm;
+    public void setMessageManager(FragmentManager fm)
+    {
+        this.fm = fm;
+    }
+    public void refresh(List<Record> _RecordList)
     {
         RecordList = _RecordList;
         notifyDataSetChanged();
@@ -52,20 +61,39 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
         holder.position = i;
         final Record record = RecordList.get(i);
         holder.briefview.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){     //click the record for more information
-                Intent intent = new Intent(context, Activity_record.class);
-                Bundle bundle=new Bundle();
-                Log.d("NET","RecordCardAdapter record ID "+record.getID());
-                bundle.putInt("id",Integer.parseInt(record.getID()));
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+            public void onClick(View v){       //click the record to modify or delete it
+                FragmentMyCheck myDialogFragment = new FragmentMyCheck();
+                myDialogFragment.setInterface(new FragmentMyCheck.NoticeDialogListener() {
+                    @Override
+                    public void onDialogPositiveClick(int key) {
+                        Toast.makeText(context, "修改", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, ActivityChange.class);
+                        Bundle bundle=new Bundle();
+                        Log.d("NET","RecordCardAdapter record ID "+record.getID());
+                        bundle.putInt("id", Integer.parseInt(record.getID()));
+                        intent.putExtras(bundle);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        //message.uploadFile(true);
+                    }
+
+                    @Override
+                    public void onDialogNegativeClick(int key) {
+                        Toast.makeText(context, "删除", Toast.LENGTH_LONG).show();
+                        record.deleteFile();
+                        //message.uploadFile(false);
+                    }
+                });
+                myDialogFragment.show(fm, "dialog_fragment");
+
             }
         });
         Log.d("NET","RecordCardAdapter"+record.getDescribetext());
         holder.information.setText(record.getDescribetext());       //get the record's information
-        holder.usrname.setText(record.getID());
+        holder.usrname.setText(record.getName());
         holder.price.setText(record.getPrice());
         holder.number.setText(record.getNumber());
+        //holder.gridView.setAdapter(new ImageAdapter(context,0));
 
     }
 

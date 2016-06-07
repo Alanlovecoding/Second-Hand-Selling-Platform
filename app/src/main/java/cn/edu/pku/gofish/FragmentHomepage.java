@@ -87,7 +87,8 @@ public class FragmentHomepage extends Fragment {
         {
             int id = idList.get(i);
             String I = ""+id;
-            Record tmp = new Record(id);
+            String idt=String.valueOf(id);
+            Record tmp = new Record(idt);
             RecordList.add(tmp);
             RecordList.get(i).downloadFile();
         }
@@ -105,7 +106,8 @@ public class FragmentHomepage extends Fragment {
             int id = idList.get(i);
             String I = ""+id;
             Log.d("NET", "Homepage" + I);
-            Record tmp = new Record(id);
+            String idt=String.valueOf(id);
+            Record tmp = new Record(idt);
             RecordList.add(tmp);
             //if(i == idList.size()-1)
             //{
