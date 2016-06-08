@@ -27,7 +27,7 @@ public class Message1 {
     private int ID;
     private int user_id;
     private int item_id;
-    private String status;
+    private String status;            //whether a message is reviewed or not
     public Message1(int id)
     {
         ID = id;
@@ -73,11 +73,11 @@ public class Message1 {
     public void uploadFile(boolean flag){
 
         RequestParams params = new RequestParams();
-        //user_id,item_id,number,status
+                                                //user_id,item_id,number,status
         params.put("user_id", user_id);
         params.put("item_id", item_id);
         params.put("message", briefmessage);
-        if(flag)//reviewed unreviewed rejected
+        if(flag)                               //reviewed unreviewed rejected
             params.put("status","reviewed");
         else
             params.put("status", "rejected");

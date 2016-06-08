@@ -111,18 +111,18 @@ public class FragmentHomepage extends Fragment {
             RecordList.add(tmp);
             //if(i == idList.size()-1)
             //{
-                RecordList.get(i).setInterface(new Record.NoticeDialogListener(){
+            RecordList.get(i).setInterface(new Record.NoticeDialogListener(){
 
-                    @Override
-                    public void onDialogPositiveClick() {
-                        newPage();
-                    }
+                @Override
+                public void onDialogPositiveClick() {
+                    newPage();
+                }
 
-                    @Override
-                    public void onDialogNegativeClick() {
+                @Override
+                public void onDialogNegativeClick() {
 
-                    }
-                });
+                }
+            });
             //}
             RecordList.get(i).downloadFile();
         }

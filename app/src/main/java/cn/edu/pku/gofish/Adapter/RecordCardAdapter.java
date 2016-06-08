@@ -62,10 +62,10 @@ public class RecordCardAdapter extends RecyclerView.Adapter {
             }
         });
         Log.d("NET","RecordCardAdapter"+record.getDescribetext());
-        holder.information.setText(record.getDescribetext());       //get the record's information
-        holder.usrname.setText(record.getID());
-        holder.price.setText(record.getPrice());
-        holder.number.setText(record.getNumber());
+        holder.information.setText("物品简介:"+record.getDescribetext());       //get the record's information
+        holder.usrname.setText("用户ID:"+record.getID());
+        holder.price.setText("物品价格:"+record.getPrice());
+        holder.number.setText("物品数量:"+record.getNumber());
 
     }
 

@@ -21,7 +21,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cn.edu.pku.gofish.Exception.MyException;
 import cn.edu.pku.gofish.USR;
@@ -44,6 +46,7 @@ public class Record {
     private String usrname;
 
     private String status;
+    private int picnum=0;
 
 
     private Bitmap[] file;
@@ -74,14 +77,15 @@ public class Record {
         this.ID = ID;
     }
     String impath;       //impath is the path of the upload photo
-    public Record(String user_id, String _title, String _describetext, String _pricetext, String _number,String _imagePaths,String status) {
+    public Record(String user_id, String _title, String _describetext, String _pricetext, String _number,ArrayList<String> _imgPaths,String status) {
         title = _title;
         describetext = _describetext;
         price = _pricetext;
 
         this.user_id = user_id;
         number = _number;
-        impath = _imagePaths;
+        imagePaths = _imgPaths;
+        picnum=imagePaths.size();
         //file=new File[9];
         /*if(imagePaths!=null) {
             imagePaths = _imagePaths;
@@ -134,12 +138,14 @@ public class Record {
 
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                Log.d("NET", "Record post done"+new String(bytes));
+                //Log.d("NET", "Record post done"+new String(bytes));
                 mListener.onDialogPositiveClick();
-                try {
-                    postPhoto(new String(bytes));      //upload one photo
-                } catch (MyException e) {
-                    e.printStackTrace();
+                for(int j=0;j<picnum;j++) {
+                    try {
+                        postPhoto(j,new String(bytes));      //upload one photo
+                    } catch (MyException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -218,6 +224,7 @@ public class Record {
                     price = response.getString("price");
                     String description = response.getString("description");
                     describetext = description;
+                    title=response.getString("title");
                     Log.d("NET","Record "+user_id+" "+number+" "+price+" "+describetext);
                     if(mListener!=null)
                     {
@@ -270,24 +277,24 @@ public class Record {
     public String getPrice(){return price;}
     public String getNumber(){return number;}
 
-    public void postPhoto(String item_id) throws MyException{     //upload a photo,the argument is the number of the record
-        Log.d("NET", "Record uploadfile begin");
+    public void postPhoto(int i,String item_id) throws MyException{     //upload a photo,the argument is the number of the record
+        Log.d("NET", "Record uploadfile "+i+" begin");
         int count = 0;
         FileInputStream fis = null;
         RequestParams params = new RequestParams();
 
         File file = null;
         try {
-            file = new File(impath);       //open the upload picture to file
+            file = new File(imagePaths.get(i));       //open the upload picture to file
         }catch(Exception e){
 
         }
         params.put("item_id", item_id);
-
+        final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
         if(file.exists()&& file.length()>0) {      //if file exist and length>0
             try {
                 //params.put("", file);
-                Log.d("NET", "Record image_file " + file.toString());
+                //Log.d("NET", "Record image_file " + file.toString());
                 int length = (int) file.length();
 
                 byte[] bytes = new byte[length];
@@ -311,7 +318,9 @@ public class Record {
                 File sdCard = Environment.getExternalStorageDirectory();
                 File dir = new File(sdCard.getAbsolutePath() + "/dir1/dir2");    //put the upload picture to a new path
                 dir.mkdirs();
-                File file2 = new File(dir, "mytextfile.jpg");    //give it a new name
+                String t = format.format(new Date());
+                String tmpname="tmpfileup" + t + ".jpg";
+                File file2 = new File(dir, tmpname);    //give it a new name
 
                 FileOutputStream f = new FileOutputStream(file2, false);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
@@ -321,7 +330,7 @@ public class Record {
 
                 params.put("image_file", file2);      //put the file2 to params
 
-                Log.d("NET", "content " + contents);
+                //Log.d("NET", "content " + contents);
             } catch (FileNotFoundException e) {
                 Log.d("NET", "file not exist");
                 e.printStackTrace();

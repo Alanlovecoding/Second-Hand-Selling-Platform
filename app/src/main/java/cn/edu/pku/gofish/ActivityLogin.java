@@ -48,7 +48,7 @@ public class ActivityLogin extends FragmentActivity {
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {           //set listener for login button
+            public void onClick(View v) {
                 userNameValue = userName.getText().toString();
                 passwordValue = password.getText().toString();
                 login();
@@ -59,7 +59,7 @@ public class ActivityLogin extends FragmentActivity {
 
         btn_visitor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {        //set listener for signin button
+            public void onClick(View v) {
                 if (register == null) {
                     register = new FragmentRegister();
                     register.setInterface(new FragmentRegister.NoticeDialogListener() {
@@ -86,9 +86,9 @@ public class ActivityLogin extends FragmentActivity {
         params.put("password", passwordValue);
         Log.d("NET", "login " + params.toString());
         client.post(url, params, new AsyncHttpResponseHandler() {
+
             @Override
             public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
-
                 String message = new String(bytes);
                 if(message.equals("0"))
                 {
@@ -96,12 +96,10 @@ public class ActivityLogin extends FragmentActivity {
                 }
                 JSONObject tmp = new JSONObject();
                 try {
-                    Log.d("NET", "login check");
                     tmp = new JSONObject(message);
                     USR.usrname=tmp.getString("name");
                     USR.usr_id = Integer.parseInt(tmp.getString("id"));
                     USR.email = tmp.getString("email");
-                    Log.d("NET","login return"+USR.usr_id);
                 }catch(Exception e)
                 {
                     Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_LONG).show();

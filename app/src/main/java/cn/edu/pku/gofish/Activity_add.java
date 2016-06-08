@@ -46,6 +46,8 @@ public class Activity_add extends AppCompatActivity {
     private EditText pricetext,numbertext;
     private TextView issueConfirm;
     private String TAG =Activity_add.class.getSimpleName();
+    private int picnum=0;
+    private ArrayList<Record> recordList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +109,7 @@ public class Activity_add extends AppCompatActivity {
                 String num = numbertext.getText().toString();
                 String price;
                 String number;
+                picnum=imagePaths.size()-1;
                 if(priceString!=null)             //in case there is no price or number information
                 {
                     try {price = priceString;}
@@ -121,11 +124,15 @@ public class Activity_add extends AppCompatActivity {
                     try {number = num;}
                     catch (Exception e) {number = "0";}
                 }else{number = "0";}
-                Log.d("NET", "Activity add done "+gridAdapter.getItem(0));
+                //Log.d("NET", "Activity add done "+gridAdapter.getItem(0));
                 String path2 = Environment.getExternalStorageDirectory()
                         .getPath();
-
-                Record item = new Record(String.valueOf(USR.usr_id),titleString,describeString,price,number,gridAdapter.getItem(0),"unreviewed");
+                ArrayList<String> tmppath =new ArrayList<String>();
+                tmppath.addAll(imagePaths);
+                if(tmppath.contains("000000"))
+                    tmppath.remove("000000");
+                Record item = new Record(String.valueOf(USR.usr_id), titleString, describeString, price, number, tmppath, "unreviewed");
+                Log.d("NET","activity_add add"+picnum+"pictures");
                 item.setInterface(new Record.NoticeDialogListener(){
 
                     @Override
@@ -142,13 +149,13 @@ public class Activity_add extends AppCompatActivity {
                         handler.sendMessage(message);
                     }
                 });
-                try {
-                    Log.d("NET", "activity");
-                    item.uploadFile();           //upload the record
+                    try {
+                        Log.d("NET", "activity");
+                        item.uploadFile();           //upload the record
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 /*$table->increments('id');
                 $table->string('title');
                 $table->integer('number');

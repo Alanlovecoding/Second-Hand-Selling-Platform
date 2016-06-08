@@ -97,18 +97,18 @@ public class FragmentFavorite extends Fragment {
             RecordList.add(tmp);
             //if(i == idList.size()-1)
             //{
-                RecordList.get(i).setInterface(new Record.NoticeDialogListener(){
+            RecordList.get(i).setInterface(new Record.NoticeDialogListener(){
 
-                    @Override
-                    public void onDialogPositiveClick() {
-                        newPage();
-                    }
+                @Override
+                public void onDialogPositiveClick() {
+                    newPage();
+                }
 
-                    @Override
-                    public void onDialogNegativeClick() {
+                @Override
+                public void onDialogNegativeClick() {
 
-                    }
-                });
+                }
+            });
             //}
             RecordList.get(i).downloadFile();
         }
@@ -129,8 +129,8 @@ public class FragmentFavorite extends Fragment {
                     Log.d("NET", "favorite get success");
 
                     for (int i = 0; i < list.length(); i++) {
-                            idList.add(list.getInt(i));
-                            Log.d("NET", "favorite get" + list.getInt(i));
+                        idList.add(list.getInt(i));
+                        Log.d("NET", "favorite get" + list.getInt(i));
                     }
 
                     refresh();
