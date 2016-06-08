@@ -65,7 +65,9 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        return Item::find($id);
+        $item = Item::find($id);
+        $user = $item->user;
+        return $item;
     }
 
     /**
@@ -118,5 +120,11 @@ class ItemsController extends Controller
     {
         $item = Item::find($id);
         return $item->images()->pluck('filename');
+    }
+
+    public function search($keyword)
+    {
+        return Item::where('title', 'like', '%'.$keyword.'%')
+            ->orWhere('description', 'like', '%'.$keyword.'%')->get()->pluck('id');
     }
 }

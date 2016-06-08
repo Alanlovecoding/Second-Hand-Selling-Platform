@@ -8,11 +8,11 @@ api/users/{id}                      POST        name,email                      
 api/users/{id}/delete               GET         -                                               delete a user(this is stupid and dangerous...)      1
 api/items                           GET         -                                               get all items                                       item_ids
 api/items                           POST        title,number,user_id,price,description,status   add an item                                         1/0
-api/items/{id}                      GET         -                                               get one item by id                                  item
+api/items/{id}                      GET         -                                               get one item by id                                  item with its publisher(user)
 api/items/{id}                      POST        title,number,user_id,price,description,status   update an item                                      1/0
 api/items/{id}/delete               GET         -                                               delete an item                                      1
-api/items/{id}/images               GET
-
+api/items/{id}/images               GET         -                                               get images of an item                               image file names
+api/items/search/{keyword}          GET         -                                               search items                                        item_ids
 api/trade_requests                  GET         -                                               get all trade_requests                              trade_requests
 api/trade_requests                  POST        user_id,item_id,message,status                  add a trade_request                                 1/0
 api/trade_requests/{id}             GET         -                                               get one trade_request by id                         trade_request

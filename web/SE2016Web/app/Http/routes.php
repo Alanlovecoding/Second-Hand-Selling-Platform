@@ -32,6 +32,7 @@ Route::group(['prefix' => 'api'], function () {
 	Route::post('items/{id}', 'Api\ItemsController@update');
 	Route::get('items/{id}/delete', 'Api\ItemsController@destroy');
 	Route::get('items/{id}/images', 'Api\ItemsController@images');
+	Route::get('items/search/{keyword}', 'Api\ItemsController@search');
 
 	Route::resource('trade_requests', 'Api\TradeRequestsController', ['only' => ['index', 'store', 'show']]);
 	Route::post('trade_requests/{id}', 'Api\TradeRequestsController@update');
