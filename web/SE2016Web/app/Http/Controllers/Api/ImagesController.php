@@ -21,7 +21,8 @@ class ImagesController extends Controller
         $item_id = $request->input('item_id');
         if ($request->hasFile('image_file')) {
             $file_name = strval($item_id) . strval(time()) . strval(mt_rand(1,100)) . '.jpg';
-            Storage::put('images/' . $file_name, $request->file('image_file'));
+            Storage::put('images/' . $file_name,
+                file_get_contents($request->file('image_file')->getRealPath()));
             $image_record = New Image;
             $image_record->item_id = $item_id;
             $image_record->filename = $file_name;
