@@ -76,7 +76,7 @@
     <script src="/Flat-UI-master/dist/js/vendor/video.js"></script>
     <script src="/Flat-UI-master/dist/js/flat-ui.min.js"></script>
     <script src="/Flat-UI-master/docs/assets/js/application.js"></script>
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
       $(window).on("redirect", redirect);
       function redirect(e) {
         var width = $(window).width();
@@ -85,6 +85,6 @@
         }
       }
       $(document).ready(redirect());
-    </script>
+    </script>-->
   </body>
 </html>
