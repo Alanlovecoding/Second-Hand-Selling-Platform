@@ -18,8 +18,9 @@
         <TextView android:id="@+id/addTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12dp"
             android:hint="标题"
+            android:layout_margin="12dp"
             android:editable="false" />
 
     </RelativeLayout>

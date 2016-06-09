@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
  * Created by leonardo on 16/5/7.
  */
 public class FragmentMe extends Fragment {
-    private FrameLayout MyItem,MyReceive,MySend;
+    private FrameLayout MyItem,MySend;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me, null);
         return view;
@@ -24,7 +24,6 @@ public class FragmentMe extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MyItem = (FrameLayout) getActivity().findViewById(R.id.layout_meIssue);
-        MyReceive = (FrameLayout) getActivity().findViewById(R.id.layout_meRentIn);
         MySend = (FrameLayout) getActivity().findViewById(R.id.layout_meRentOut);
 
         MyItem.setOnClickListener(new View.OnClickListener() {
@@ -32,15 +31,6 @@ public class FragmentMe extends Fragment {
             public void onClick(View v) {
                 Log.d("NET", "fragment me ");
                 Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMyItem.class);
-                getContext().startActivity(intent);
-            }
-        });
-
-        MyReceive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("NET", "fragment me ");
-                Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMyReceiveRequest.class);
                 getContext().startActivity(intent);
             }
         });

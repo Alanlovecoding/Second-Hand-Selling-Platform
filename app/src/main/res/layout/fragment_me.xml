@@ -97,59 +97,10 @@
 
                 <!-- Rent In Information -->
 
-                <FrameLayout
-                    android:id="@+id/layout_meRentIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/grayboarder">
-
-                    <ImageView
-                        android:id="@+id/image_meRentIn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dip"
-                        android:src="@drawable/icon_me_rentin" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/meRentIn"
-                        android:layout_marginLeft="80dip"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-                </FrameLayout>
-
 
                 <!-- Like Information -->
 
             </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/layout_meSetting"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/grayboarder"
-                android:layout_marginTop="10dip">
-
-                <ImageView
-                    android:id="@+id/image_meSetting"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dip"
-                    android:src="@drawable/icon_me_setting" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/meSetting"
-                    android:layout_marginLeft="80dip"
-                    android:textColor="@android:color/black"
-                    android:textSize="24sp" />
-            </FrameLayout>
 
         </LinearLayout>
 
