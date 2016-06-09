@@ -12,7 +12,6 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -224,9 +223,11 @@ public class Record {
                     number = response.getString("number");
                     price = response.getString("price");
                     String description = response.getString("description");
-
-                    JSONObject user = response.getJSONObject("user");
-                    user_id = user.getString("name");
+                    JSONObject user = null;
+                    if(response.has("user"))
+                     user = response.getJSONObject("user");
+                    if(user!=null)
+                        user_id = user.getString("name");
 
                     describetext = description;
                     title=response.getString("title");
@@ -331,6 +332,9 @@ public class Record {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 85, f);
                 f.flush();
                 f.close();
+                bitmap.recycle();
+                bitmap=null;
+                System.gc();
                 Log.d("NET", "write done ");
 
                 params.put("image_file", file2);      //put the file2 to params

@@ -279,11 +279,11 @@ public class Activity_add extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     Toast.makeText(Activity_add.this, "publish success", Toast.LENGTH_LONG).show();
-                    //Activity_add.this.finish();
+                    Activity_add.this.finish();
                     break;
                 case 0:
                     Toast.makeText(Activity_add.this, "publish failed", Toast.LENGTH_LONG).show();
-                    //Activity_add.this.finish();
+                    Activity_add.this.finish();
                     break;
             }
             super.handleMessage(msg);

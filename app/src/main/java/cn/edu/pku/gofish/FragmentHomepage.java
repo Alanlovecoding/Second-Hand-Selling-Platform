@@ -69,6 +69,14 @@ public class FragmentHomepage extends Fragment {
             @Override
             public void onClick(View v) {
                 String tmp = searchText.getText().toString();
+                if(tmp!=null)
+                {
+                    downloadsearch(tmp);
+                }
+                else
+                {
+                    downloadList();
+                }
             }
         });
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -161,6 +169,38 @@ public class FragmentHomepage extends Fragment {
             }
         });
     }
+
+    public void downloadsearch(String keyword)
+    {
+        Log.d("NET", "HomePage");
+        mSwipeLayout.setRefreshing(true);
+        client.get("http://gofish.hackpku.com:8003/api/items/search/"+keyword, null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("NET", "HomePage get success");
+                try {
+                    JSONArray list = response;
+                    idList.clear();
+                    for (int i = 0; i < list.length(); i++) {
+                        idList.add(list.getInt(i));
+                        Log.d("NET", "HomePage get "+list.getInt(i));
+                    }
+
+                    refresh();
+                    mSwipeLayout.setRefreshing(false);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
+    }
+
 
     public void newPage()
     {
