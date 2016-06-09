@@ -32,12 +32,9 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
               <ul class="nav navbar-nav navbar-left">
-                <li ><a href="#">Home</a></li>
-                <li class="divider"></li>
+                <li ><a href="http://hackpku.com.app-release.apk">Download</a></li>
                 <li><a href="#demovideo">Demo Video</a></li>
-                <li class="divider"></li>
                 <li><a href="#footer">About Us</a></li>
-                <li class="divider"></li>
                 <li><a href="mailto:yaowang95@pku.edu.cn">Contact Us</a></li>
                </ul>
             </div><!-- /.navbar-collapse -->
@@ -46,7 +43,7 @@
 <!--
 <ul class="nav navbar-fixed-top nav-tabs navbar-collapse" style="background-color:#ffffff;">
    <li class="active"><a href="#">Home</a></li>
-   <li><a href="#feature">features</a></li>
+   <li><a href="#demovideo">features</a></li>
    <li><a href="#footer">about us</a></li>
    <li><a href="mailto:yaowang95@pku.edu.cn">contact us</a></li>
 </ul>-->
@@ -71,7 +68,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-6">
-          <video id="feature" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
+          <video id="demovideo" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
           </video>
