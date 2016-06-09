@@ -47,12 +47,9 @@
    <li><a href="#footer">about us</a></li>
    <li><a href="mailto:yaowang95@pku.edu.cn">contact us</a></li>
 </ul>-->
-<br>
-<br>
     
-    <div class="container">
-     <div class="row text-center">
-      <div class="col-xs-6 col-xs-offset-1"><div class="demo-headline">
+     <div class="row">
+      <div class="col-xs-8 col-xs-offset-2"><div class="demo-headline">
         <h1 class="demo-logo">
           <div class="logo"></div>
           Go Fish
@@ -62,19 +59,20 @@
           <a href="http://hackpku.com.app-release.apk" class="btn btn-md btn-primary">Click to download Android Version</a>
         </div>
         </div>
+          <br>
+          <br>
       </div> <!-- /demo-headline -->
-  </div>
-  <br>
-    <div class="container">
+
+
+
       <div class="row">
-        <div class="col-xs-6 col-xs-offset-1">
+        <div class="col-xs-8 col-xs-offset-2">
           <video id="demovideo" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
           </video>
         </div> <!-- /video -->
       </div>
-    </div>
 
     </div>
 
