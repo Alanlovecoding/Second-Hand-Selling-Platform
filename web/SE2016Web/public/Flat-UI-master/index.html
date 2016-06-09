@@ -22,9 +22,8 @@
     <![endif]-->
   </head>
   <body>
-<div class="container">
-  <div class="col-xs-12">
-    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+<div class="col-xs-12">
+        <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
                 <span class="sr-only">Toggle navigation</span>
@@ -54,9 +53,9 @@
 <br>
 <br>
     
-    
-     <div class="row" style="width:100%;">
-      <div class="col-xs-6">
+    <div class="container">
+     <div class="row">
+      <div class="col-xs-6"><div class="demo-headline">
         <h1 class="demo-logo">
           <div class="logo"></div>
           Go Fish
@@ -65,21 +64,25 @@
         <div class="text-center">
           <a href="http://hackpku.com.app-release.apk" class="btn btn-md btn-primary">Click to download Android Version</a>
         </div>
+        </div>
       </div> <!-- /demo-headline -->
   </div>
   <br>
-      <div class="row" style="width:100%;">
+    <div class="container">
+      <div class="row">
         <div class="col-xs-6">
-          <video id="demovideo" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
+          <video id="feature" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
           </video>
         </div> <!-- /video -->
       </div>
+    </div>
 
+    </div>
 
     <footer id = "footer">
-       <div class="row" style="width:100%;">
+       <div class="row">
          <div class="col-xs-12 palette palette-wet-asphalt">
             <h3>go fish</h3>
             <hr>
@@ -93,7 +96,7 @@
         </div>
     </footer>
 
-</div>
+
     <script src="/Flat-UI-master/dist/js/vendor/jquery.min.js"></script>` 
     <script src="/Flat-UI-master/dist/js/vendor/video.js"></script>
     <script src="/Flat-UI-master/dist/js/flat-ui.min.js"></script>
