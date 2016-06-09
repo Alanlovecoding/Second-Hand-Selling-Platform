@@ -24,7 +24,7 @@ public class FragmentMe extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         MyItem = (FrameLayout) getActivity().findViewById(R.id.layout_meIssue);
-        MyReceive = (FrameLayout) getActivity().findViewById(R.id.layout_meRentIn);
+
         MySend = (FrameLayout) getActivity().findViewById(R.id.layout_meRentOut);
 
         MyItem.setOnClickListener(new View.OnClickListener() {
@@ -36,14 +36,7 @@ public class FragmentMe extends Fragment {
             }
         });
 
-        MyReceive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("NET", "fragment me ");
-                Intent intent = new Intent(getContext(), cn.edu.pku.gofish.ActivityMyReceiveRequest.class);
-                getContext().startActivity(intent);
-            }
-        });
+
 
         MySend.setOnClickListener(new View.OnClickListener() {
             @Override
