@@ -22,30 +22,61 @@
     <![endif]-->
   </head>
   <body>
-
-<ul class="nav navbar-fixed-top nav-tabs navbar-collapse">
+<div class="col-xs-12">
+<nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+              </button>
+              <a class="navbar-brand" href="#">Go Fish</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-01">
+              <ul class="nav navbar-nav navbar-left">
+                <li><a href="#fakelink">Menu Item<span class="navbar-unread">1</span></a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Messages <b class="caret"></b></a>
+                  <span class="dropdown-arrow"></span>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+                <li><a href="#footer">About Us</a></li>
+               </ul>
+            </div><!-- /.navbar-collapse -->
+          </nav><!-- /navbar -->
+</div>
+<!--
+<ul class="nav navbar-fixed-top nav-tabs navbar-collapse" style="background-color:#ffffff;">
    <li class="active"><a href="#">Home</a></li>
    <li><a href="#feature">features</a></li>
    <li><a href="#footer">about us</a></li>
    <li><a href="mailto:yaowang95@pku.edu.cn">contact us</a></li>
-</ul>
-
+</ul>-->
+<br>
+<br>
     
     <div class="container">
-      <div class="demo-headline">
+     <div class="row">
+      <div class="col-xs-6"><div class="demo-headline">
         <h1 class="demo-logo">
           <div class="logo"></div>
           Go Fish
-          <small>Make your idle items useful</small>
+          <small>Make your idle items useful!</small>
         </h1>
         <div class="text-center">
           <a href="http://hackpku.com.app-release.apk" class="btn btn-md btn-primary">Click to download Android Version</a>
         </div>
+        </div>
       </div> <!-- /demo-headline -->
-
+  </div>
+  <br>
     <div class="container">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6">
           <video id="feature" class="video-js" preload="auto" poster="/Flat-UI-master/docs/assets/img/video/poster.jpg" data-setup="{}">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.mp4" type="video/mp4">
             <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
@@ -58,7 +89,7 @@
 
     <footer id = "footer">
        <div class="row">
-         <div class="col-lg-12 palette palette-wet-asphalt">
+         <div class="col-xs-12 palette palette-wet-asphalt">
             <h3>go fish</h3>
             <hr>
             <a href="gofish.hackpku.com:8003">gofish.hackpku.com</a>
@@ -76,15 +107,15 @@
     <script src="/Flat-UI-master/dist/js/vendor/video.js"></script>
     <script src="/Flat-UI-master/dist/js/flat-ui.min.js"></script>
     <script src="/Flat-UI-master/docs/assets/js/application.js"></script>
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
       $(window).on("redirect", redirect);
       function redirect(e) {
         var width = $(window).width();
-        if (width > 768px) {
+        if (width > 768) {
           window.location.href = "index_pc.html"
         }
       }
       $(document).ready(redirect());
-    </script>-->
+    </script>
   </body>
 </html>
