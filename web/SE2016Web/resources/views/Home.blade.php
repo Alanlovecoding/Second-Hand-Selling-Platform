@@ -103,6 +103,9 @@
         if (width > 768) {
           window.location.href = "/Flat-UI-master/index_pc.html"
         }
+        else{
+          window.location.href = "/Flat-UI-master/index.html"
+        }
       }
       $(document).ready(redirect());
     </script>
