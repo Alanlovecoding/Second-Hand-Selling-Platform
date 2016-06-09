@@ -223,6 +223,8 @@ public class Record {
                     number = response.getString("number");
                     price = response.getString("price");
                     String description = response.getString("description");
+                    JSONObject user = response.getJSONObject("user");
+                    user_id = user.getString("name");
                     describetext = description;
                     title=response.getString("title");
                     Log.d("NET","Record "+user_id+" "+number+" "+price+" "+describetext);
