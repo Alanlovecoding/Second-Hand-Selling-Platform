@@ -12,6 +12,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.SyncHttpClient;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -223,6 +224,8 @@ public class Record {
                     number = response.getString("number");
                     price = response.getString("price");
                     String description = response.getString("description");
+                    JSONObject user=response.getJSONObject("user");
+                    user_id=user.getString("name");
                     describetext = description;
                     title=response.getString("title");
                     Log.d("NET","Record "+user_id+" "+number+" "+price+" "+describetext);
@@ -267,7 +270,7 @@ public class Record {
 
     public String getName()
     {
-        return usrname;
+        return user_id;
     }
     public String getID(){return ID;}
     public String getTitle(){return title;}

@@ -22,6 +22,7 @@ public class Message1 {
     private String time;
     String usrname;
     private String briefmessage;
+    private String title;
     String url = "http://gofish.hackpku.com:8003/api/trade_requests";
     AsyncHttpClient client = new AsyncHttpClient();
     private int ID;
@@ -51,13 +52,15 @@ public class Message1 {
     }
     public String UsrnameLine()
     {
-        return ""+user_id;
+        return ""+usrname;
     }
     public String BriefMessageLine()
     {
         return briefmessage;
     }
     public String getStatus(){return status;}
+    public String getTime(){return time;}
+    public String getTitle(){return title;}
     NoticeDialogListener mListener = null;
     public interface NoticeDialogListener {
         public void onDialogPositiveClick();
@@ -109,12 +112,11 @@ public class Message1 {
                     if (status == null || status.equals(""))
                         status = "unreviewed";
                     time = response.getString("created_at");
-                    if (mListener != null) {
-                        mListener.onDialogPositiveClick();
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                downloadRecord();
             }
 
             @Override
@@ -125,6 +127,30 @@ public class Message1 {
                 }
             }
         });
+    }
+
+    private void downloadRecord()
+    {
+        final  Record recordItem=new Record(""+item_id);
+        recordItem.setInterface(new Record.NoticeDialogListener() {
+
+            @Override
+            public void onDialogPositiveClick() {
+                title=recordItem.getTitle();
+                usrname=recordItem.getName();
+                if (mListener != null) {
+                    mListener.onDialogPositiveClick();
+                }
+
+                Log.d("NET", "activity page refresh");
+            }
+
+            @Override
+            public void onDialogNegativeClick() {
+
+            }
+        });
+        recordItem.downloadFile();
     }
 
     public void deleteFile(){
