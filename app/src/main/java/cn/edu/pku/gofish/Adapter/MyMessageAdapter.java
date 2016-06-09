@@ -17,6 +17,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import java.util.List;
 
 import cn.edu.pku.gofish.FragmentItemCheck;
+import cn.edu.pku.gofish.FragmentRequestInfo;
 import cn.edu.pku.gofish.Model.Message1;
 import cn.edu.pku.gofish.R;
 
@@ -27,6 +28,7 @@ public class MyMessageAdapter extends RecyclerView.Adapter {
     private List<Message1> MessageList;
     private Context context;
     private FragmentManager fm;
+    private FragmentRequestInfo requestInfo;
     AsyncHttpClient client = new AsyncHttpClient();
 
     public MyMessageAdapter(List<Message1> _MessageList,Context context) {
@@ -58,9 +60,13 @@ public class MyMessageAdapter extends RecyclerView.Adapter {
         holder.position = i;
         final Message1 message = MessageList.get(i);
 
-        holder.usrname.setText(message.UsrnameLine() + " "+message.getStatus());
-        holder.briefmessage.setText("send time: "+message.TimeLine()+"\r\n"+"brief message: "+message.BriefMessageLine());
-        Log.d("NET", "messageAdapter message1 status" +message.getStatus() );
+        holder.usrname.setText("收信人昵称: "+message.UsrnameLine());
+        holder.briefmessage.setText("我对他说: " + message.BriefMessageLine());
+        holder.status.setText(message.getStatus());
+        holder.time.setText(message.getTime());
+        holder.title.setText("我感兴趣的: "+message.getTitle());
+
+        Log.d("NET", "messageAdapter message1 status" + message.getStatus());
         holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -82,6 +88,21 @@ public class MyMessageAdapter extends RecyclerView.Adapter {
                 return false;
             }
         });
+
+        holder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(message.getStatus().equals("reviewed"))
+                {
+                    if(requestInfo == null){
+                        requestInfo = new FragmentRequestInfo();
+                        requestInfo.setID(message.getUser_id());
+                    }
+                    requestInfo.show(fm, "dialog_fragment");
+                }
+
+            }
+        });
     }
 
     public int getItemCount() {
@@ -93,6 +114,8 @@ public class MyMessageAdapter extends RecyclerView.Adapter {
         public TextView time;
         public TextView usrname;
         public TextView briefmessage;
+        public TextView title;
+        public TextView status;
         //public ImageView usrpic;
         public int position;
         public LinearLayout cardview;
@@ -106,6 +129,9 @@ public class MyMessageAdapter extends RecyclerView.Adapter {
             usrname = (TextView) view.findViewById(R.id.mvusrname);
             briefmessage = (TextView) view.findViewById(R.id.mvbriefmessage);
             cardview = (LinearLayout) view.findViewById(R.id.cardview);
+            title=(TextView) view.findViewById(R.id.mvitemtitle);
+            status=(TextView) view.findViewById(R.id.mvstate);
+            time=(TextView) view.findViewById(R.id.mvtime);
 
             /*cardview.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -61,8 +61,12 @@ public class MessageAdapter extends RecyclerView.Adapter {
         holder.position = i;
         final Message1 message = MessageList.get(i);
 
-        holder.usrname.setText(message.UsrnameLine() + " "+message.getStatus());
-        holder.briefmessage.setText("send time: "+message.TimeLine()+"\r\n"+"brief message: "+message.BriefMessageLine());
+        holder.usrname.setText("发送者昵称: "+message.UsrnameLine());
+        holder.briefmessage.setText("发送者对你说: "+message.BriefMessageLine());
+        holder.status.setText(message.getStatus());
+        holder.time.setText(message.getTime());
+        holder.title.setText("感兴趣的物品: "+message.getTitle());
+
         Log.d("NET", "messageAdapter message1 status" +message.getStatus() );
         holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -96,6 +100,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
         public TextView time;
         public TextView usrname;
         public TextView briefmessage;
+        public TextView title;
+        public TextView status;
         //public ImageView usrpic;
         public int position;
         public LinearLayout cardview;
@@ -109,6 +115,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             usrname = (TextView) view.findViewById(R.id.mvusrname);
             briefmessage = (TextView) view.findViewById(R.id.mvbriefmessage);
             cardview = (LinearLayout) view.findViewById(R.id.cardview);
+            title=(TextView) view.findViewById(R.id.mvitemtitle);
+            status=(TextView) view.findViewById(R.id.mvstate);
+            time=(TextView) view.findViewById(R.id.mvtime);
 
             /*cardview.setOnClickListener(new View.OnClickListener() {
                 @Override

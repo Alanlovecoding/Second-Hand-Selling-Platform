@@ -17,7 +17,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.pku.gofish.Adapter.MessageAdapter;
+import cn.edu.pku.gofish.Adapter.MyMessageAdapter;
 import cn.edu.pku.gofish.Model.Message1;
 import cz.msebera.android.httpclient.Header;
 
@@ -27,7 +27,7 @@ import cz.msebera.android.httpclient.Header;
 public class ActivityMyReceiveRequest extends AppCompatActivity {
     private List<Message1> MessageList;
     private RecyclerView recyclerView;
-    private MessageAdapter messageAdapter;
+    private MyMessageAdapter messageAdapter;
     private List<Integer> idList;
     private String url = "http://gofish.hackpku.com:8003/";
     private SwipeRefreshLayout mSwipeLayout;
@@ -45,7 +45,7 @@ public class ActivityMyReceiveRequest extends AppCompatActivity {
         MessageList = new ArrayList<Message1>();
         idList = new ArrayList<Integer>();
         downloadList();
-        messageAdapter=new MessageAdapter(MessageList,getApplicationContext());
+        messageAdapter=new MyMessageAdapter(MessageList,getApplicationContext());
         messageAdapter.setMessageManager(getSupportFragmentManager());
         recyclerView.setAdapter(messageAdapter);
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

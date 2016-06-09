@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/lightgray" >
+    android:background="@color/white" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@color/white"
                 android:orientation="vertical">
@@ -123,30 +123,6 @@
 
 
                 <!-- Like Information -->
-
-                <FrameLayout
-                    android:id="@+id/layout_meLike"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@drawable/grayboarder">
-
-                    <ImageView
-                        android:id="@+id/image_meLike"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dip"
-                        android:src="@drawable/icon_favorite_select" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="@string/meLike"
-                        android:layout_marginLeft="80dip"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-                </FrameLayout>
 
             </LinearLayout>
 
