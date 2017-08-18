@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <FrameLayout
+        android:id="@+id/frame_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/frameMenu"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        >
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameMenu"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="#F5F5F5"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            >
+
+            <!-- homepage -->
+
+            <FrameLayout
+                android:id="@+id/layout_homepage"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_homepage"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/icon_homepage_select" />
+
+                <TextView
+                    android:id="@+id/text_homepage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/homepage"
+                    android:textColor="@drawable/text_color_select"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- message -->
+
+            <FrameLayout
+                android:id="@+id/layout_message"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_message"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/icon_message_select" />
+
+                <TextView
+                    android:id="@+id/text_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/message"
+                    android:textColor="@drawable/text_color_select"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <!-- 留白 -->
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+            </FrameLayout>
+
+            <!-- favorite -->
+
+            <FrameLayout
+                android:id="@+id/layout_favorite"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_favorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/icon_favorite_select" />
+
+                <TextView
+                    android:id="@+id/text_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/favorite"
+                    android:textColor="@drawable/text_color_select"
+                    android:textSize="12sp"
+                    android:autoText="true" />
+            </FrameLayout>
+
+            <!-- me -->
+
+            <FrameLayout
+                android:id="@+id/layout_me"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/image_me"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|center"
+                    android:src="@drawable/icon_me_select" />
+
+                <TextView
+                    android:id="@+id/text_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|center"
+                    android:text="@string/me"
+                    android:textColor="@drawable/text_color_select"
+                    android:textSize="12sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <!-- 中间按钮背景 -->
+
+    <ImageView
+        android:id="@+id/toggle_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+
+        android:layout_centerInParent="true"
+        android:src="@drawable/bg_button_add"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 中间按钮 -->
+
+    <ImageView
+        android:id="@+id/plus_btn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/icon_add_black"
+        android:layout_marginBottom="12dp"
+        android:layout_centerHorizontal="true"
+         />
+
+</RelativeLayout>
